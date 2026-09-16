@@ -3,674 +3,599 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Moon Chinese - Học Tiếng Trung HSK 1-9</title>
-    <script src="https://cdn.jsdelivr.net/npm/hanzi-writer@3.5.0/dist/hanzi-writer.min.js"></script>
+    <title>Ha Moon Chinese - Tiếng Trung Lê Thị Hà</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #d93838;
-            --primary-hover: #b52b2b;
-            --bg-color: #fcf6f5;
-            --card-bg: #ffffff;
-            --text-color: #2c3e50;
-            --gray-text: #7f8c8d;
-            --border: #f0d5d5;
+            --primary: #e11d48;
+            --primary-light: #fff1f2;
+            --primary-dark: #be123c;
+            --text-main: #1f2937;
+            --text-muted: #6b7280;
+            --bg-body: #f8fafc;
+            --bg-card: #ffffff;
+            --border: #e2e8f0;
+            --radius: 16px;
+            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            margin: 0;
-            padding: 0;
+            font-family: 'Plus Jakarta Sans', 'Noto Sans SC', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding-bottom: 60px;
         }
+
         header {
-            background: linear-gradient(135deg, #e74c3c, #c0392b);
-            color: white;
-            padding: 15px 30px;
+            background: linear-gradient(135deg, #fff 0%, #fff1f2 100%);
+            border-bottom: 1px solid var(--border);
+            padding: 20px 24px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 4px rgb(0 0 0 / 0.02);
         }
-        .logo-area { display: flex; align-items: center; gap: 12px; }
-        .logo-icon { background: #f39c12; color: white; font-weight: bold; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 8px; font-size: 18px; }
-        .logo-title h2 { margin: 0; font-size: 20px; }
-        .logo-title p { margin: 0; font-size: 12px; opacity: 0.9; }
-        .badge-hsk { background: rgba(255,255,255,0.2); padding: 6px 14px; border-radius: 20px; font-size: 14px; font-weight: bold; }
 
-        .nav-tabs {
-            background: white;
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            padding: 10px 20px;
-            border-bottom: 1px solid var(--border);
-            overflow-x: auto;
-        }
-        .nav-btn {
-            background: transparent;
-            border: none;
-            padding: 8px 14px;
-            font-size: 14px;
-            font-weight: 600;
-            color: #555;
-            cursor: pointer;
-            border-radius: 6px;
-            transition: all 0.2s;
-            white-space: nowrap;
-        }
-        .nav-btn:hover, .nav-btn.active {
+        .logo-area { display: flex; align-items: center; gap: 12px; }
+        .logo-icon {
+            width: 48px; height: 48px;
             background: var(--primary);
             color: white;
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 20px; font-weight: 700;
+            box-shadow: 0 4px 12px rgba(225, 29, 72, 0.3);
+        }
+        .logo-title h2 { font-size: 1.25rem; font-weight: 700; color: var(--text-main); }
+        .logo-title p { font-size: 0.85rem; color: var(--text-muted); }
+        .badge-hsk {
+            background: var(--primary-light);
+            color: var(--primary);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            border: 1px solid #fecdd3;
         }
 
-        .main-container {
-            max-width: 1100px;
-            margin: 30px auto;
-            padding: 0 20px;
+        .container { max-width: 1200px; margin: 24px auto; padding: 0 20px; }
+
+        .nav-tabs {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+            margin-bottom: 24px;
+            scrollbar-width: thin;
         }
-        .grid-lessons {
+        .nav-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 10px 18px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+            white-space: nowrap;
+            color: var(--text-muted);
+        }
+        .nav-btn:hover { border-color: var(--primary); color: var(--primary); }
+        .nav-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            box-shadow: 0 4px 12px rgba(225, 29, 72, 0.25);
+        }
+
+        .lessons-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
             gap: 20px;
         }
+
         .lesson-card {
-            background: var(--card-bg);
+            background: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 20px;
+            border-radius: var(--radius);
+            padding: 24px;
             cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
         .lesson-card:hover {
             transform: translateY(-4px);
-            box-shadow: 0 8px 20px rgba(217, 56, 56, 0.1);
             border-color: var(--primary);
+            box-shadow: 0 10px 25px -5px rgb(0 0 0 / 0.1);
         }
-        .lesson-tag { font-size: 13px; color: var(--primary); font-weight: bold; margin-bottom: 6px; }
-        .lesson-title { font-size: 18px; font-weight: bold; margin-bottom: 6px; color: #2d3748; }
-        .lesson-sub { font-size: 14px; color: var(--gray-text); margin-bottom: 15px; }
-        .lesson-count { font-size: 12px; background: #fae1e1; color: var(--primary); padding: 4px 10px; border-radius: 12px; display: inline-block; font-weight: 600; }
+        .lesson-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
+        .lesson-tag {
+            background: var(--primary-light);
+            color: var(--primary);
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        .lesson-num { font-weight: 700; color: var(--text-muted); font-size: 0.85rem; }
+        .lesson-title h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: 4px; color: var(--text-main); }
+        .lesson-title p { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 16px; }
+        .lesson-meta {
+            display: flex;
+            gap: 16px;
+            border-top: 1px solid var(--border);
+            padding-top: 12px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
 
-        /* Study Area */
-        .study-view { display: none; background: white; border-radius: 16px; padding: 30px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
-        .study-view.active { display: block; }
-        .back-home { background: #f1f5f9; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 600; cursor: pointer; margin-bottom: 20px; }
-        .back-home:hover { background: #e2e8f0; }
-        
-        .sub-tabs { display: flex; gap: 8px; margin-bottom: 25px; border-bottom: 2px solid #eee; padding-bottom: 10px; overflow-x: auto; }
-        .sub-tab-btn { background: #f1f5f9; border: none; padding: 8px 14px; border-radius: 6px; font-weight: 600; cursor: pointer; white-space: nowrap; font-size: 14px; }
-        .sub-tab-btn.active { background: var(--primary); color: white; }
-        
-        .tab-pane { display: none; }
-        .tab-pane.active { display: block; }
+        /* Modal nội dung bài học */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .modal.active { display: flex; }
+        .modal-content {
+            background: var(--bg-card);
+            width: 100%; max-width: 900px;
+            max-height: 90vh;
+            border-radius: var(--radius);
+            display: flex; flex-direction: column;
+            box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+            animation: modalShow 0.3s ease;
+            overflow: hidden;
+        }
+        @keyframes modalShow {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .modal-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--border);
+            display: flex; justify-content: space-between; align-items: center;
+            background: #fff;
+        }
+        .modal-close {
+            background: var(--bg-body); border: none; width: 36px; height: 36px;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-size: 18px; cursor: pointer; color: var(--text-muted); transition: var(--transition);
+        }
+        .modal-close:hover { background: var(--primary-light); color: var(--primary); }
 
-        /* Flashcard */
-        .flashcard-container { perspective: 1000px; width: 100%; max-width: 500px; height: 280px; margin: 0 auto 20px auto; cursor: pointer; }
-        .flashcard { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.6s; border-radius: 14px; box-shadow: 0 6px 20px rgba(0,0,0,0.08); }
-        .flashcard.flipped { transform: rotateY(180deg); }
-        .card-face { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; background: white; border-radius: 14px; border: 1px solid var(--border); box-sizing: border-box; padding: 20px; }
-        .card-back { transform: rotateY(180deg); background: #fff5f5; }
-        .hanzi-large { font-size: 60px; font-weight: bold; margin-bottom: 10px; color: #111; }
-        .pinyin { font-size: 20px; color: var(--gray-text); margin-bottom: 10px; }
-        .meaning { font-size: 24px; font-weight: bold; color: var(--primary); text-align: center; }
-        
-        .controls { display: flex; justify-content: center; align-items: center; gap: 20px; margin-top: 20px; }
-        .btn { background: var(--primary); color: white; border: none; padding: 10px 22px; font-size: 15px; border-radius: 8px; cursor: pointer; font-weight: 600; }
-        .btn:hover { background: var(--primary-hover); }
+        .modal-body { padding: 24px; overflow-y: auto; flex: 1; }
 
-        /* Writer */
-        .writer-section { display: flex; flex-direction: column; align-items: center; background: #fafafa; border: 1px solid var(--border); border-radius: 12px; padding: 15px; margin-top: 20px; }
-        #character-target { width: 120px; height: 120px; background: white; border: 1px solid #ccc; border-radius: 8px; margin-bottom: 10px; }
-        .writer-btns { display: flex; gap: 8px; }
-        .btn-small { padding: 6px 12px; font-size: 13px; background: #e5e7eb; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; }
-        .btn-small:hover { background: #cbd5e1; }
+        .section-title {
+            font-size: 1.1rem; font-weight: 700; color: var(--primary);
+            margin: 24px 0 12px 0; display: flex; align-items: center; gap: 8px;
+        }
+        .section-title:first-child { margin-top: 0; }
 
-        /* Vocab Table */
-        .vocab-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-        .vocab-table th, .vocab-table td { border: 1px solid var(--border); padding: 10px 14px; text-align: left; font-size: 15px; }
-        .vocab-table th { background: #fef2f2; color: var(--primary); }
-        .vocab-table tr:nth-child(even) { background: #fafafa; }
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 12px;
+        }
+        .vocab-item {
+            background: var(--bg-body);
+            border: 1px solid var(--border);
+            padding: 12px 16px;
+            border-radius: 10px;
+            text-align: center;
+            transition: var(--transition);
+        }
+        .vocab-item:hover { border-color: var(--primary); background: var(--primary-light); }
+        .vocab-hanzi { font-size: 1.5rem; font-weight: 700; color: var(--text-main); margin-bottom: 2px; }
+        .vocab-pinyin { font-size: 0.85rem; color: var(--primary); font-weight: 600; margin-bottom: 4px; }
+        .vocab-meaning { font-size: 0.85rem; color: var(--text-muted); }
 
-        /* Quiz & Translate */
-        .box-container { background: #fafafa; border: 1px solid var(--border); border-radius: 12px; padding: 25px; max-width: 650px; margin: 0 auto; }
-        .quiz-question { font-size: 18px; font-weight: bold; margin-bottom: 20px; text-align: center; }
-        .options-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
-        .option-btn { background: white; border: 1px solid var(--border); padding: 12px 16px; text-align: left; font-size: 15px; border-radius: 8px; cursor: pointer; transition: all 0.2s; }
-        .option-btn:hover { background: #fef2f2; border-color: var(--primary); }
-        .option-btn.correct { background: #d1fae5 !important; border-color: #10b981 !important; color: #065f46; }
-        .option-btn.wrong { background: #fee2e2 !important; border-color: #ef4444 !important; color: #991b1b; }
+        .grammar-box {
+            background: var(--primary-light);
+            border-left: 4px solid var(--primary);
+            padding: 16px; border-radius: 0 10px 10px 0;
+            font-size: 0.95rem; color: var(--text-main);
+        }
+        .grammar-box h3 { color: var(--primary); margin-bottom: 6px; font-size: 1rem; }
 
-        /* Translation box */
-        .trans-input { width: 100%; padding: 12px; font-size: 15px; border: 1px solid var(--border); border-radius: 8px; box-sizing: border-box; margin-bottom: 15px; }
-        
-        /* Game Match Cards */
-        .game-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; max-width: 600px; margin: 0 auto; }
-        .game-card { background: #e2e8f0; height: 70px; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: bold; border-radius: 8px; cursor: pointer; user-select: none; transition: 0.2s; }
-        .game-card.selected { background: #fca5a5; color: #991b1b; border: 2px solid var(--primary); }
-        .game-card.matched { background: #d1fae5; color: #065f46; visibility: hidden; cursor: default; }
+        .translate-item {
+            background: var(--bg-body);
+            border: 1px solid var(--border);
+            padding: 12px 16px; border-radius: 10px;
+            margin-bottom: 10px;
+        }
+        .translate-prompt { font-weight: 600; margin-bottom: 6px; color: var(--text-main); }
+        .translate-answer { color: var(--primary); font-size: 0.9rem; font-weight: 500; display: none; }
+        .translate-answer.show { display: block; margin-top: 4px; }
+        .btn-toggle {
+            background: none; border: 1px solid var(--primary); color: var(--primary);
+            padding: 4px 10px; border-radius: 6px; font-size: 0.75rem; font-weight: 600;
+            cursor: pointer; margin-top: 6px; transition: var(--transition);
+        }
+        .btn-toggle:hover { background: var(--primary); color: white; }
     </style>
 </head>
 <body>
 
-<header>
-    <div class="logo-area">
-        <div class="logo-icon">Hà</div>
-        <div class="logo-title">
-            <h2>Ha Moon Chinese</h2>
-            <p>Tiếng Trung chuẩn HSK 3.0 </p>
+    <header>
+        <div class="logo-area">
+            <div class="logo-icon">Hà</div>
+            <div class="logo-title">
+                <h2>Ha Moon Chinese</h2>
+                <p>Tiếng Trung chuẩn HSK 3.0 - Lê Thị Hà</p>
+            </div>
+        </div>
+        <div class="badge-hsk">HSK 1 Standard</div>
+    </header>
+
+    <div class="container">
+        <div class="nav-tabs" id="level-nav">
+            <button class="nav-btn active" onclick="filterLevel('all')">Tất cả bài học</button>
+            <button class="nav-btn" onclick="filterLevel('HSK 1')">HSK 1 (150 Từ vựng)</button>
+        </div>
+
+        <div class="lessons-grid" id="lessonsGrid">
+            <!-- Render bằng JavaScript -->
         </div>
     </div>
-    <div class="badge-hsk">HSK 1 - 9 Standard</div>
-</header>
 
-<div class="nav-tabs" id="level-nav">
-    <button class="nav-btn active" onclick="filterLevel('all')">Tất cả</button>
-    <button class="nav-btn" onclick="filterLevel('HSK 1')">HSK 1</button>
-    <button class="nav-btn" onclick="filterLevel('HSK 2')">HSK 2</button>
-    <button class="nav-btn" onclick="filterLevel('HSK 3')">HSK 3</button>
-    <button class="nav-btn" onclick="filterLevel('HSK 4')">HSK 4</button>
-    <button class="nav-btn" onclick="filterLevel('HSK 5')">HSK 5</button>
-    <button class="nav-btn" onclick="filterLevel('HSK 6')">HSK 6</button>
-    <button class="nav-btn" onclick="filterLevel('HSK 7-9')">HSK 7-9</button>
-</div>
-
-<div class="main-container">
-    <!-- HOME SCREEN -->
-    <div id="home-view">
-        <div class="grid-lessons" id="lessons-grid"></div>
+    <!-- Modal Chi Tiết Bài Học -->
+    <div class="modal" id="lessonModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div>
+                    <span id="modalTag" class="lesson-tag">HSK 1</span>
+                    <h2 id="modalTitle" style="font-size: 1.25rem; margin-top: 4px;">Tên bài học</h2>
+                </div>
+                <button class="modal-close" onclick="closeModal()">✕</button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Nội dung chi tiết bài học -->
+            </div>
+        </div>
     </div>
 
-    <!-- STUDY SCREEN -->
-    <div id="study-view" class="study-view">
-        <button class="back-home" onclick="goHome()">&larr; Quay lại danh sách bài học</button>
-        <h2 id="study-lesson-title" style="color: var(--primary); margin-top: 0;">Bài học</h2>
-        
-        <div class="sub-tabs">
-            <button class="sub-tab-btn active" onclick="switchSubTab('vocab')">📖 Từ vựng</button>
-            <button class="sub-tab-btn" onclick="switchSubTab('flashcard')">🃏 Flashcard</button>
-            <button class="sub-tab-btn" onclick="switchSubTab('grammar')">📜 Ngữ pháp</button>
-            <button class="sub-tab-btn" onclick="switchSubTab('quiz')">✍️ Trắc nghiệm</button>
-            <button class="sub-tab-btn" onclick="switchSubTab('translate')">🈸 Bài tập dịch</button>
-            <button class="sub-tab-btn" onclick="switchSubTab('game')">🎮 Minigame Ghép từ</button>
-        </div>
+    <script>
+        const lessonsData = [
+            {
+                id: 1, level: "HSK 1", titleNum: "第1课", title: "基础代名词与问候", sub: "Đại từ cơ bản và Chào hỏi",
+                vocab: [
+                    { hanzi: "我", pinyin: "wǒ", meaning: "tôi, ta, mình" },
+                    { hanzi: "你", pinyin: "nǐ", meaning: "anh, chị, bạn..." },
+                    { hanzi: "他", pinyin: "tā", meaning: "anh ấy, ông ấy..." },
+                    { hanzi: "她", pinyin: "tā", meaning: "cô ấy, bà ấy..." },
+                    { hanzi: "我们", pinyin: "wǒmen", meaning: "chúng ta" },
+                    { hanzi: "好", pinyin: "hǎo", meaning: "khỏe, tốt..." },
+                    { hanzi: "再见", pinyin: "zàijiàn", meaning: "tạm biệt" },
+                    { hanzi: "谢谢", pinyin: "xièxie", meaning: "cảm ơn" },
+                    { hanzi: "不客气", pinyin: "búkèqi", meaning: "đừng khách sáo" },
+                    { hanzi: "对不起", pinyin: "duìbùqi", meaning: "xin lỗi" },
+                    { hanzi: "没关系", pinyin: "méi guānxi", meaning: "không sao đâu" },
+                    { hanzi: "爱", pinyin: "ài", meaning: "yêu, thích" }
+                ],
+                grammar: `<h3>1. Đại từ nhân xưng cơ bản</h3><p>我 (tôi), 你 (bạn), 他/她 (anh ấy/cô ấy). Thêm 们 (men) đằng sau để chuyển thành số nhiều (ví dụ: 我们 - chúng ta).</p>`,
+                translate: [
+                    { prompt: "Dịch sang tiếng Việt: 你好！", answer: "Xin chào!" },
+                    { prompt: "Dịch sang tiếng Việt: 谢谢你。", answer: "Cảm ơn bạn." }
+                ]
+            },
+            {
+                id: 2, level: "HSK 1", titleNum: "第2课", title: "数字与 1 到 10", sub: "Các số đếm từ 1 đến 10",
+                vocab: [
+                    { hanzi: "一", pinyin: "yī", meaning: "số 1" },
+                    { hanzi: "二", pinyin: "èr", meaning: "số 2" },
+                    { hanzi: "三", pinyin: "sān", meaning: "số 3" },
+                    { hanzi: "四", pinyin: "sì", meaning: "số 4" },
+                    { hanzi: "五", pinyin: "wǔ", meaning: "số 5" },
+                    { hanzi: "六", pinyin: "liù", meaning: "số 6" },
+                    { hanzi: "七", pinyin: "qī", meaning: "số 7" },
+                    { hanzi: "八", pinyin: "bā", meaning: "số 8" },
+                    { hanzi: "九", pinyin: "jiǔ", meaning: "số 9" },
+                    { hanzi: "十", pinyin: "shí", meaning: "số 10" },
+                    { hanzi: "几", pinyin: "jǐ", meaning: "mấy" },
+                    { hanzi: "多少", pinyin: "duōshao", meaning: "bao nhiêu" }
+                ],
+                grammar: `<h3>1. Cách dùng 几 và 多少</h3><p><strong>几</strong> dùng để hỏi số lượng nhỏ (dưới 10). <strong>多少</strong> dùng để hỏi số lượng lớn hơn hoặc không giới hạn.</p>`,
+                translate: [
+                    { prompt: "Dịch sang tiếng Việt: 你几岁？", answer: "Bạn mấy tuổi?" }
+                ]
+            },
+            {
+                id: 3, level: "HSK 1", titleNum: "第3课", title: "家庭与人物", sub: "Gia đình và con người",
+                vocab: [
+                    { hanzi: "爸爸", pinyin: "baba", meaning: "cha, bố" },
+                    { hanzi: "妈妈", pinyin: "māma", meaning: "mẹ" },
+                    { hanzi: "儿子", pinyin: "érzi", meaning: "con trai" },
+                    { hanzi: "女儿", pinyin: "nǚ'ér", meaning: "con gái" },
+                    { hanzi: "老师", pinyin: "lǎoshī", meaning: "thầy/cô giáo" },
+                    { hanzi: "学生", pinyin: "xuéshēng", meaning: "học sinh" },
+                    { hanzi: "同学", pinyin: "tóngxué", meaning: "bạn cùng lớp" },
+                    { hanzi: "朋友", pinyin: "péngyou", meaning: "bạn" },
+                    { hanzi: "医生", pinyin: "yīshēng", meaning: "bác sĩ" },
+                    { hanzi: "先生", pinyin: "xiānshēng", meaning: "ông, ngài" },
+                    { hanzi: "小姐", pinyin: "xiǎojiě", meaning: "cô" },
+                    { hanzi: "人", pinyin: "rén", meaning: "người" }
+                ],
+                grammar: `<h3>1. Danh từ chỉ người</h3><p>Thường đứng độc lập hoặc kết hợp với danh từ khác để chỉ nghề nghiệp, quan hệ xã hội.</p>`,
+                translate: [
+                    { prompt: "Dịch sang tiếng Việt: 他是我的老师。", answer: "Anh ấy là thầy giáo của tôi." }
+                ]
+            },
+            {
+                id: 4, level: "HSK 1", titleNum: "第4课", title: "日常饮食与食物", sub: "Đồ ăn và thức uống",
+                vocab: [
+                    { hanzi: "水", pinyin: "shuǐ", meaning: "nước" },
+                    { hanzi: "茶", pinyin: "chá", meaning: "trà" },
+                    { hanzi: "米饭", pinyin: "mǐfàn", meaning: "cơm" },
+                    { hanzi: "菜", pinyin: "cài", meaning: "món ăn, thức ăn" },
+                    { hanzi: "苹果", pinyin: "píngguo", meaning: "táo" },
+                    { hanzi: "水果", pinyin: "shuǐguǒ", meaning: "trái cây" },
+                    { hanzi: "吃", pinyin: "chī", meaning: "ăn" },
+                    { hanzi: "喝", pinyin: "hē", meaning: "uống" },
+                    { hanzi: "买", pinyin: "mǎi", meaning: "mua" },
+                    { hanzi: "饭店", pinyin: "fàndiàn", meaning: "khách sạn, nhà hàng" }
+                ],
+                grammar: `<h3>1. Cấu trúc câu có động từ 吃 / 喝</h3><p>Chủ ngữ + Động từ + Tân ngữ. Ví dụ: 我喝水 (Tôi uống nước).</p>`,
+                translate: [
+                    { prompt: "Dịch sang tiếng Việt: 我想吃米饭。", answer: "Tôi muốn ăn cơm." }
+                ]
+            },
+            {
+                id: 5, level: "HSK 1", titleNum: "第5课", title: "时间和日期", sub: "Thời gian và Ngày tháng",
+                vocab: [
+                    { hanzi: "今天", pinyin: "jīntiān", meaning: "hôm nay" },
+                    { hanzi: "明天", pinyin: "míngtiān", meaning: "ngày mai" },
+                    { hanzi: "昨天", pinyin: "zuótiān", meaning: "hôm qua" },
+                    { hanzi: "年", pinyin: "nián", meaning: "năm" },
+                    { hanzi: "月", pinyin: "yuè", meaning: "tháng" },
+                    { hanzi: "号", pinyin: "hào", meaning: "ngày" },
+                    { hanzi: "星期", pinyin: "xīngqī", meaning: "tuần, thứ" },
+                    { hanzi: "点", pinyin: "diǎn", meaning: "giờ" },
+                    { hanzi: "分钟", pinyin: "fēnzhōng", meaning: "phút" },
+                    { hanzi: "时候", pinyin: "shíhòu", meaning: "lúc, khi" },
+                    { hanzi: "现在", pinyin: "xiànzài", meaning: "bây giờ, hiện tại" }
+                ],
+                grammar: `<h3>1. Biểu thị thời gian trong câu</h3><p>Trạng ngữ chỉ thời gian thường đứng trước chủ ngữ hoặc sau chủ ngữ.</p>`,
+                translate: [
+                    { prompt: "Dịch sang tiếng Việt: 今天几月几号？", answer: "Hôm nay là ngày mấy tháng mấy?" }
+                ]
+            },
+            {
+                id: 6, level: "HSK 1", titleNum: "第6课", title: "常用动物 & Đồ vật", sub: "Đồ vật quanh ta và hành động",
+                vocab: [
+                    { hanzi: "电脑", pinyin: "diànnǎo", meaning: "máy vi tính" },
+                    { hanzi: "电视", pinyin: "diànshì", meaning: "tivi" },
+                    { hanzi: "电影", pinyin: "diànyǐng", meaning: "phim" },
+                    { hanzi: "书", pinyin: "shū", meaning: "sách" },
+                    { hanzi: "衣服", pinyin: "yīfu", meaning: "quần áo" },
+                    { hanzi: "杯子", pinyin: "bēizi", meaning: "ly, tách" },
+                    { hanzi: "桌子", pinyin: "zhuōzi", meaning: "bàn" },
+                    { hanzi: "椅子", pinyin: "yǐzi", meaning: "ghế dựa" },
+                    { hanzi: "猫", pinyin: "māo", meaning: "mèo" },
+                    { hanzi: "狗", pinyin: "gǒu", meaning: "chó" },
+                    { hanzi: "字", pinyin: "zì", meaning: "chữ" }
+                ],
+                grammar: `<h3>1. Danh từ chỉ vật</h3><p>Dùng để gọi tên các đồ vật quen thuộc trong đời sống hằng ngày.</p>`,
+                translate: [
+                    { prompt: "Dịch sang tiếng Việt: 这是一本书。", answer: "Đây là một cuốn sách." }
+                ]
+            },
+            {
+                id: 7, level: "HSK 1", titleNum: "第7课", title: "Place & Direction", sub: "Địa điểm và phương hướng",
+                vocab: [
+                    { hanzi: "家", pinyin: "jiā", meaning: "nhà" },
+                    { hanzi: "学校", pinyin: "xuéxiào", meaning: "trường học" },
+                    { hanzi: "医院", pinyin: "yīyuàn", meaning: "bệnh viện" },
+                    { hanzi: "商店", pinyin: "shāngdiàn", meaning: "cửa hàng" },
+                    { hanzi: "中国", pinyin: "zhōngguó", meaning: "Trung Quốc" },
+                    { hanzi: "北京", pinyin: "běijīng", meaning: "Bắc Kinh" },
+                    { hanzi: "上", pinyin: "shàng", meaning: "trên, phía trên" },
+                    { hanzi: "下", pinyin: "xià", meaning: "dưới, phía dưới" },
+                    { hanzi: "里", pinyin: "lǐ", meaning: "trong, bên trong" },
+                    { hanzi: "前面", pinyin: "qiánmiàn", meaning: "phía trước" },
+                    { hanzi: "后面", pinyin: "hòumiàn", meaning: "phía sau" }
+                ],
+                grammar: `<h3>1. Danh từ chỉ phương vị</h3><p>Thường đặt sau danh từ chỉ vật/địa điểm để chỉ vị trí.</p>`,
+                translate: [
+                    { prompt: "Dịch sang tiếng Việt: 我在学校。", answer: "Tôi ở trường học." }
+                ]
+            },
+            {
+                id: 8, level: "HSK 1", titleNum: "第8课", title: "Hành động & Di chuyển", sub: "Các hoạt động thường ngày",
+                vocab: [
+                    { hanzi: "去", pinyin: "qù", meaning: "đi, đi đến" },
+                    { hanzi: "来", pinyin: "lái", meaning: "đến, tới" },
+                    { hanzi: "回", pinyin: "huí", meaning: "về, trở về" },
+                    { hanzi: "坐", pinyin: "zuò", meaning: "ngồi" },
+                    { hanzi: "做", pinyin: "zuò", meaning: "làm, nấu" },
+                    { hanzi: "看", pinyin: "kàn", meaning: "nhìn, xem" },
+                    { hanzi: "听", pinyin: "tīng", meaning: "nghe" },
+                    { hanzi: "说", pinyin: "shuō", meaning: "nói" },
+                    { hanzi: "读", pinyin: "dú", meaning: "đọc" },
+                    { hanzi: "写", pinyin: "xiě", meaning: "viết" },
+                    { hanzi: "开", pinyin: "kāi", meaning: "lái, mở" },
+                    { hanzi: "住", pinyin: "zhù", meaning: "ở" }
+                ],
+                grammar: `<h3>1. Động từ hành động</h3><p>Các động từ chỉ hành động cơ bản ghép với tân ngữ tạo thành câu đơn giản.</p>`,
+                translate: [
+                    { prompt: "Dịch sang tiếng Việt: 我去北京。", answer: "Tôi đi Bắc Kinh." }
+                ]
+            },
+            {
+                id: 9, level: "HSK 1", titleNum: "第9课", title: "Tính từ & Cảm xúc", sub: "Mô tả tính chất và trạng thái",
+                vocab: [
+                    { hanzi: "大", pinyin: "dà", meaning: "lớn" },
+                    { hanzi: "小", pinyin: "xiǎo", meaning: "nhỏ, bé" },
+                    { hanzi: "多", pinyin: "duō", meaning: "nhiều" },
+                    { hanzi: "少", pinyin: "shǎo", meaning: "ít" },
+                    { hanzi: "冷", pinyin: "lěng", meaning: "lạnh" },
+                    { hanzi: "热", pinyin: "rè", meaning: "nóng" },
+                    { hanzi: "高兴", pinyin: "gāoxìng", meaning: "vui, phấn khởi" },
+                    { hanzi: "漂亮", pinyin: "piàoliang", meaning: "đẹp" },
+                    { hanzi: "好", pinyin: "hǎo", meaning: "tốt, khỏe" }
+                ],
+                grammar: `<h3>1. Câu tính từ vị ngữ</h3><p>Tính từ làm vị ngữ, thường đi kèm phó từ mức độ 很 (rất).</p>`,
+                translate: [
+                    { prompt: "Dịch sang tiếng Việt: 今天很热。", answer: "Hôm nay rất nóng." }
+                ]
+            },
+            {
+                id: 10, level: "HSK 1", titleNum: "第10课", title: "Trợ từ, Phó từ & Động từ năng nguyện", sub: "Ngữ pháp cốt lõi HSK 1",
+                vocab: [
+                    { hanzi: "的", pinyin: "de", meaning: "trợ từ sở hữu/định ngữ" },
+                    { hanzi: "了", pinyin: "le", meaning: "trợ từ ngữ khí" },
+                    { hanzi: "吗", pinyin: "ma", meaning: "trợ từ nghi vấn" },
+                    { hanzi: "呢", pinyin: "ne", meaning: "trợ từ hỏi ngược lại" },
+                    { hanzi: "很", pinyin: "hěn", meaning: "rất" },
+                    { hanzi: "太", pinyin: "tài", meaning: "quá, lắm" },
+                    { hanzi: "都", pinyin: "dōu", meaning: "đều" },
+                    { hanzi: "不", pinyin: "bù", meaning: "không" },
+                    { hanzi: "没有", pinyin: "méiyǒu", meaning: "không có" },
+                    { hanzi: "能", pinyin: "néng", meaning: "có thể" },
+                    { hanzi: "会", pinyin: "huì", meaning: "biết" },
+                    { hanzi: "想", pinyin: "xiǎng", meaning: "muốn, nhớ" }
+                ],
+                grammar: `<h3>1. Câu hỏi với 吗</h3><p>Thêm 吗 vào cuối câu trần thuật để biến thành câu hỏi Yes/No.</p>`,
+                translate: [
+                    { prompt: "Dịch sang tiếng Việt: 你会说汉语吗？", answer: "Bạn có biết nói tiếng Trung không?" }
+                ]
+            },
+            {
+                id: 11, level: "HSK 1", titleNum: "第11课", title: "Giao tiếp tổng hợp", sub: "Giao tiếp mở rộng",
+                vocab: [
+                    { hanzi: "汉语", pinyin: "hànyǔ", meaning: "tiếng Trung Quốc" },
+                    { hanzi: "名字", pinyin: "míngzi", meaning: "tên" },
+                    { hanzi: "岁", pinyin: "suì", meaning: "tuổi" },
+                    { hanzi: "天气", pinyin: "tiānqì", meaning: "thời tiết" },
+                    { hanzi: "飞机", pinyin: "fēijī", meaning: "máy bay" },
+                    { hanzi: "出租车", pinyin: "chūzūchē", meaning: "taxi" },
+                    { hanzi: "电话", pinyin: "diànhuà", meaning: "điện thoại" },
+                    { hanzi: "喂", pinyin: "wèi", meaning: "a lô, này" },
+                    { hanzi: "工作", pinyin: "gōngzuò", meaning: "làm việc" },
+                    { hanzi: "学习", pinyin: "xuéxí", meaning: "học tập" },
+                    { hanzi: "认识", pinyin: "rènshi", meaning: "quen, biết" },
+                    { hanzi: "看见", pinyin: "kànjiàn", meaning: "nhìn thấy" }
+                ],
+                grammar: `<h3>1. Cấu trúc chào hỏi</h3><p>Dùng để làm quen và giao tiếp các chủ đề thông dụng.</p>`,
+                translate: [
+                    { prompt: "Dịch sang tiếng Việt: 认识你很高兴。", answer: "Rất vui được làm quen với bạn." }
+                ]
+            }
+        ];
 
-        <!-- TAB VOCAB -->
-        <div id="pane-vocab" class="tab-pane active">
-            <table class="vocab-table">
-                <thead>
-                    <tr><th>STT</th><th>Chữ Hán</th><th>Pinyin</th><th>Nghĩa</th><th>Audio</th></tr>
-                </thead>
-                <tbody id="vocab-table-body"></tbody>
-            </table>
-        </div>
-
-        <!-- TAB FLASHCARD -->
-        <div id="pane-flashcard" class="tab-pane">
-            <div class="flashcard-container" onclick="flipCard()">
-                <div class="flashcard" id="cardElement">
-                    <div class="card-face">
-                        <div class="hanzi-large" id="fc-hanzi"></div>
-                        <div class="pinyin" id="fc-pinyin"></div>
-                        <div style="font-size: 13px; color: #9ca3af;">(Bấm để lật xem nghĩa)</div>
-                    </div>
-                    <div class="card-face card-back">
-                        <div class="meaning" id="fc-meaning"></div>
-                        <div style="margin-top: 15px;">
-                            <button class="btn" onclick="event.stopPropagation(); playAudio(currentLessonData.vocab[currentIndex].hanzi)">🔊 Nghe phát âm</button>
+        function renderLessons(filter = 'all') {
+            const grid = document.getElementById('lessonsGrid');
+            grid.innerHTML = '';
+            
+            const filtered = filter === 'all' ? lessonsData : lessonsData.filter(l => l.level === filter);
+            
+            filtered.forEach(lesson => {
+                const card = document.createElement('div');
+                card.className = 'lesson-card';
+                card.onclick = () => openModal(lesson.id);
+                card.innerHTML = `
+                    <div>
+                        <div class="lesson-header">
+                            <span class="lesson-tag">${lesson.level}</span>
+                            <span class="lesson-num">${lesson.titleNum}</span>
+                        </div>
+                        <div class="lesson-title">
+                            <h3>${lesson.title}</h3>
+                            <p>${lesson.sub}</p>
                         </div>
                     </div>
+                    <div class="lesson-meta">
+                        <span>📖 ${lesson.vocab.length} từ vựng</span>
+                        <span>✍️ ${lesson.translate.length} câu dịch</span>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function filterLevel(level) {
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            renderLessons(level);
+        }
+
+        function openModal(id) {
+            const lesson = lessonsData.find(l => l.id === id);
+            if (!lesson) return;
+
+            document.getElementById('modalTag').innerText = lesson.level;
+            document.getElementById('modalTitle').innerText = `${lesson.titleNum} - ${lesson.title} (${lesson.sub})`;
+            
+            let vocabHtml = lesson.vocab.map(v => `
+                <div class="vocab-item">
+                    <div class="vocab-hanzi">${v.hanzi}</div>
+                    <div class="vocab-pinyin">${v.pinyin}</div>
+                    <div class="vocab-meaning">${v.meaning}</div>
                 </div>
-            </div>
-            <div class="controls">
-                <button class="btn" onclick="prevCard()">&larr; Từ trước</button>
-                <span id="fc-counter" style="font-weight: bold; color: var(--gray-text);">1 / 5</span>
-                <button class="btn" onclick="nextCard()">Từ sau &rarr;</button>
-            </div>
+            `).join('');
 
-            <div class="writer-section">
-                <div style="font-size: 14px; font-weight: bold; margin-bottom: 8px; color: var(--gray-text);">Thứ tự nét viết chữ Hán:</div>
-                <div id="character-target"></div>
-                <div class="writer-btns">
-                    <button class="btn-small" onclick="writer.animateCharacter()">▶ Chạy nét</button>
-                    <button class="btn-small" onclick="writer.quiz()">✏️ Tập viết</button>
+            let translateHtml = lesson.translate.map((t, idx) => `
+                <div class="translate-item">
+                    <div class="translate-prompt">${t.prompt}</div>
+                    <button class="btn-toggle" onclick="toggleAnswer(this)">Xem đáp án</button>
+                    <div class="translate-answer"><strong>Đáp án:</strong> ${t.answer}</div>
                 </div>
-            </div>
-        </div>
+            `).join('');
 
-        <!-- TAB GRAMMAR -->
-        <div id="pane-grammar" class="tab-pane">
-            <div id="grammar-content" style="line-height: 1.7; font-size: 16px;"></div>
-        </div>
+            document.getElementById('modalBody').innerHTML = `
+                <div class="section-title">📚 Danh sách từ vựng</div>
+                <div class="vocab-grid">${vocabHtml}</div>
+                
+                <div class="section-title">💡 Ngữ pháp HSK 3.0</div>
+                <div class="grammar-box">${lesson.grammar}</div>
 
-        <!-- TAB QUIZ -->
-        <div id="pane-quiz" class="tab-pane">
-            <div class="box-container">
-                <div id="quiz-progress" style="font-size: 14px; color: var(--gray-text); margin-bottom: 8px;">Câu hỏi 1/5</div>
-                <div class="quiz-question" id="quiz-question-text"></div>
-                <div class="options-list" id="quiz-options"></div>
-                <button class="btn" id="next-quiz-btn" style="width: 100%; display: none; margin-top: 15px;" onclick="nextQuiz()">Câu tiếp theo</button>
-                <div id="quiz-score-display" style="text-align: center; font-size: 20px; font-weight: bold; margin-top: 15px; color: var(--primary);"></div>
-            </div>
-        </div>
-
-        <!-- TAB TRANSLATE -->
-        <div id="pane-translate" class="tab-pane">
-            <div class="box-container">
-                <div id="trans-progress" style="font-size: 14px; color: var(--gray-text); margin-bottom: 8px;">Bài tập dịch 1/2</div>
-                <div class="quiz-question" id="trans-prompt"></div>
-                <input type="text" id="user-trans-input" class="trans-input" placeholder="Nhập câu dịch tiếng Việt/Trung của bạn...">
-                <button class="btn" id="submit-trans-btn" style="width: 100%; margin-bottom: 10px;" onclick="checkTranslation()">Kiểm tra đáp án</button>
-                <div id="trans-feedback" style="font-size: 15px; line-height: 1.5; margin-top: 10px; font-weight: bold;"></div>
-                <button class="btn" id="next-trans-btn" style="width: 100%; display: none; margin-top: 15px;" onclick="nextTranslation()">Câu tiếp theo</button>
-            </div>
-        </div>
-
-        <!-- TAB GAME -->
-        <div id="pane-game" class="tab-pane">
-            <div class="box-container" style="text-align: center;">
-                <h3>🎮 Trò chơi: Ghép Cặp Từ Vựng</h3>
-                <p style="color: var(--gray-text); font-size: 14px; margin-bottom: 20px;">Bấm chọn 1 từ Chữ Hán và 1 ô Nghĩa tương ứng để ghép cặp đúng!</p>
-                <div class="game-grid" id="game-board"></div>
-                <div id="game-message" style="margin-top: 20px; font-size: 18px; font-weight: bold; color: var(--primary);"></div>
-                <button class="btn" style="margin-top: 20px;" onclick="initGame()">Chơi lại</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script>
-    // Kho dữ liệu chuẩn HSK 1 đến HSK 9
-    const lessonsData = [
-        {
-            id: 1, level: "HSK 1", titleNum: "第1课", title: "你好，中国！", sub: "Xin chào, Trung Quốc!",
-            vocab: [
-                { hanzi: "你", pinyin: "nǐ", meaning: "Bạn, anh, chị" },
-                { hanzi: "好", pinyin: "hǎo", meaning: "Tốt, đẹp, khỏe" },
-                { hanzi: "谢谢", pinyin: "xièxiè", meaning: "Cảm ơn" },
-                { hanzi: "再见", pinyin: "zàijiàn", meaning: "Tạm biệt" },
-                { hanzi: "老师", pinyin: "lǎoshī", meaning: "Thầy/Cô giáo" }
-            ],
-            grammar: `<h3>1. Từ chào hỏi: 你好 (Nǐ hǎo)</h3><p>Dùng để chào hỏi thông thường.</p>`,
-            translate: [
-                { prompt: "Dịch sang tiếng Việt: 你好，老师！", answer: "Xin chào, thầy giáo!" },
-                { prompt: "Dịch sang tiếng Trung (Pinyin hoặc Hán tự): Cảm ơn.", answer: "谢谢" }
-            ]
-        },
-        {
-            id: 2, level: "HSK 2", titleNum: "第2课", title: "今天天气很好", sub: "Hôm nay thời tiết rất đẹp",
-            vocab: [
-                { hanzi: "今天", pinyin: "jīntiān", meaning: "Hôm nay" },
-                { hanzi: "天气", pinyin: "tiānqì", meaning: "Thời tiết" },
-                { hanzi: "很", pinyin: "hěn", meaning: "Rất" },
-                { hanzi: "高兴", pinyin: "gāoxìng", meaning: "Vui vẻ" },
-                { hanzi: "买", pinyin: "mǎi", meaning: "Mua" }
-            ],
-            grammar: `<h3>1. Trạng từ mức độ: 很 (hěn)</h3><p>Thường đứng trước tính từ để biểu thị mức độ.</p>`,
-            translate: [
-                { prompt: "Dịch sang tiếng Việt: 今天天气很好。", answer: "Hôm nay thời tiết rất tốt." }
-            ]
-        },
-        {
-            id: 3, level: "HSK 3", titleNum: "第3课", title: "他比我大两岁", sub: "Anh ấy hơn tôi hai tuổi",
-            vocab: [
-                { hanzi: "比", pinyin: "bǐ", meaning: "So với" },
-                { hanzi: "岁", pinyin: "suì", meaning: "Tuổi" },
-                { hanzi: "快", pinyin: "kuài", meaning: "Nhanh, vui vẻ" },
-                { hanzi: "慢", pinyin: "màn", meaning: "Chậm" },
-                { hanzi: "便宜", pinyin: "piányi", meaning: "Rẻ" }
-            ],
-            grammar: `<h3>1. Câu so sánh với 比 (bǐ)</h3><p>A + 比 + B + Tính từ.</p>`,
-            translate: [
-                { prompt: "Dịch sang tiếng Việt: 这件衣服比那件便宜。", answer: "Bộ quần áo này rẻ hơn bộ kia." }
-            ]
-        },
-        {
-            id: 4, level: "HSK 4", titleNum: "第4课", title: "其实你误会他了", sub: "Thực ra bạn hiểu lầm anh ấy rồi",
-            vocab: [
-                { hanzi: "其实", pinyin: "qíshí", meaning: "Thực ra, kỳ thực" },
-                { hanzi: "误会", pinyin: "wùhuì", meaning: "Hiểu lầm" },
-                { hanzi: "照顾", pinyin: "zhàogù", meaning: "Chăm sóc" },
-                { hanzi: "经验", pinyin: "jīngyàn", meaning: "Kinh nghiệm" },
-                { hanzi: "区别", pinyin: "qūbié", meaning: "Sự khác biệt" }
-            ],
-            grammar: `<h3>1. Phó từ 其实 (qíshí)</h3><p>Dùng để nói rõ tình hình thực tế, trái ngược với phỏng đoán.</p>`,
-            translate: [
-                { prompt: "Dịch sang tiếng Việt: 其实我也不知道。", answer: "Thực ra tôi cũng không biết." }
-            ]
-        },
-        {
-            id: 5, level: "HSK 5", titleNum: "第5课", title: "环境保护与经济发展", sub: "Bảo vệ môi trường và phát triển kinh tế",
-            vocab: [
-                { hanzi: "环境", pinyin: "huánjìng", meaning: "Môi trường" },
-                { hanzi: "经济", pinyin: "jīngjì", meaning: "Kinh tế" },
-                { hanzi: "发展", pinyin: "fāzhǎn", meaning: "Phát triển" },
-                { hanzi: "贡献", pinyin: "gòngxiàn", meaning: "Cống hiến" },
-                { hanzi: "挑战", pinyin: "tiǎozhàn", meaning: "Thách thức" }
-            ],
-            grammar: `<h3>1. Cấu trúc kết hợp danh từ trừu tượng</h3>`,
-            translate: [
-                { prompt: "Dịch sang tiếng Việt: 我们应该保护环境。", answer: "Chúng ta nên bảo vệ môi trường." }
-            ]
-        },
-        {
-            id: 6, level: "HSK 6", titleNum: "第6课", title: "机遇与挑战并存", sub: "Cơ hội và thách thức song hành",
-            vocab: [
-                { hanzi: "机遇", pinyin: "jīyù", meaning: "Cơ hội, thời cơ" },
-                { hanzi: "并存", pinyin: "bìngcún", meaning: "Cùng tồn tại" },
-                { hanzi: "盲目", pinyin: "mángmù", meaning: "Mù quáng" },
-                { hanzi: "妥协", pinyin: "tuǒxié", meaning: "Thỏa hiệp" },
-                { hanzi: "贯彻", pinyin: "guànchè", meaning: "Quán triệt, thực hiện" }
-            ],
-            grammar: `<h3>1. Thành ngữ và từ vựng HSK 6 cao cấp</h3>`,
-            translate: [
-                { prompt: "Dịch sang tiếng Việt: 机遇与挑战并存。", answer: "Cơ hội và thách thức cùng tồn tại." }
-            ]
-        },
-        {
-            id: 7, level: "HSK 7-9", titleNum: "第7课", title: "学术研究与跨文化交际", sub: "Nghiên cứu học thuật và giao tiếp liên văn hóa",
-            vocab: [
-                { hanzi: "学术", pinyin: "xuéshù", meaning: "Học thuật" },
-                { hanzi: "交际", pinyin: "jiāojì", meaning: "Giao tiếp, xã giao" },
-                { hanzi: "范畴", pinyin: "fànchóu", meaning: "Phạm trù" },
-                { hanzi: "博大精深", pinyin: "bódàjīngshēn", meaning: "Bác đại tinh sâu" },
-                { hanzi: "潜移默化", pinyin: "qiányímòhuà", meaning: "Mưa dầm thấm lâu / Tiềm hóa" }
-            ],
-            grammar: `<h3>1. Tiếng Trung nâng cao chuyên sâu cấp độ cao nhất (HSK 7-9)</h3>`,
-            translate: [
-                { prompt: "Dịch sang tiếng Việt: 中华文化博大精深。", answer: "Văn hóa Trung Hoa bác đại tinh sâu." }
-            ]
-        }
-    ];
-
-    let currentLessonData = null;
-    let currentIndex = 0;
-    let writer = null;
-
-    function renderLessons(filter = 'all') {
-        const grid = document.getElementById('lessons-grid');
-        grid.innerHTML = '';
-        const filtered = filter === 'all' ? lessonsData : lessonsData.filter(l => l.level === filter);
-        
-        filtered.forEach(lesson => {
-            const card = document.createElement('div');
-            card.className = 'lesson-card';
-            card.onclick = () => openLesson(lesson.id);
-            card.innerHTML = `
-                <div class="lesson-tag">${lesson.level} · ${lesson.titleNum}</div>
-                <div class="lesson-title">${lesson.title}</div>
-                <div class="lesson-sub">${lesson.sub}</div>
-                <div class="lesson-count">${lesson.vocab.length} từ vựng</div>
+                <div class="section-title">📝 Bài tập dịch câu</div>
+                <div>${translateHtml}</div>
             `;
-            grid.appendChild(card);
-        });
-    }
 
-    function filterLevel(lvl) {
-        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-        event.target.classList.add('active');
-        renderLessons(lvl);
-    }
-
-    function openLesson(id) {
-        currentLessonData = lessonsData.find(l => l.id === id);
-        document.getElementById('home-view').style.display = 'none';
-        document.getElementById('study-view').classList.add('active');
-        document.getElementById('study-lesson-title').innerText = `${currentLessonData.titleNum}: ${currentLessonData.title} (${currentLessonData.sub})`;
-        
-        // Render Vocab
-        const tbody = document.getElementById('vocab-table-body');
-        tbody.innerHTML = '';
-        currentLessonData.vocab.forEach((v, idx) => {
-            tbody.innerHTML += `
-                <tr>
-                    <td>${idx + 1}</td>
-                    <td><b>${v.hanzi}</b></td>
-                    <td>${v.pinyin}</td>
-                    <td>${v.meaning}</td>
-                    <td><button class="btn-small" onclick="playAudio('${v.hanzi}')">🔊 Nghe</button></td>
-                </tr>
-            `;
-        });
-
-        document.getElementById('grammar-content').innerHTML = currentLessonData.grammar || "<p>Đang cập nhật nội dung ngữ pháp.</p>";
-
-        currentIndex = 0;
-        updateCard();
-        switchSubTab('vocab');
-    }
-
-    function goHome() {
-        document.getElementById('study-view').classList.remove('active');
-        document.getElementById('home-view').style.display = 'block';
-    }
-
-    function switchSubTab(tabName) {
-        document.querySelectorAll('.sub-tab-btn').forEach(b => b.classList.remove('active'));
-        document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
-        
-        if(tabName === 'vocab') {
-            document.querySelector('.sub-tab-btn:nth-child(1)').classList.add('active');
-            document.getElementById('pane-vocab').classList.add('active');
-        } else if(tabName === 'flashcard') {
-            document.querySelector('.sub-tab-btn:nth-child(2)').classList.add('active');
-            document.getElementById('pane-flashcard').classList.add('active');
-            updateCard();
-        } else if(tabName === 'grammar') {
-            document.querySelector('.sub-tab-btn:nth-child(3)').classList.add('active');
-            document.getElementById('pane-grammar').classList.add('active');
-        } else if(tabName === 'quiz') {
-            document.querySelector('.sub-tab-btn:nth-child(4)').classList.add('active');
-            document.getElementById('pane-quiz').classList.add('active');
-            initQuiz();
-        } else if(tabName === 'translate') {
-            document.querySelector('.sub-tab-btn:nth-child(5)').classList.add('active');
-            document.getElementById('pane-translate').classList.add('active');
-            initTranslation();
-        } else if(tabName === 'game') {
-            document.querySelector('.sub-tab-btn:nth-child(6)').classList.add('active');
-            document.getElementById('pane-game').classList.add('active');
-            initGame();
-        }
-    }
-
-    function updateCard() {
-        isFlipped = false;
-        document.getElementById('cardElement').classList.remove('flipped');
-        const item = currentLessonData.vocab[currentIndex];
-        document.getElementById('fc-hanzi').innerText = item.hanzi;
-        document.getElementById('fc-pinyin').innerText = item.pinyin;
-        document.getElementById('fc-meaning').innerText = item.meaning;
-        document.getElementById('fc-counter').innerText = `${currentIndex + 1} / ${currentLessonData.vocab.length}`;
-        initWriter(item.hanzi.charAt(0));
-    }
-
-    let isFlipped = false;
-    function flipCard() {
-        isFlipped = !isFlipped;
-        document.getElementById('cardElement').classList.toggle('flipped', isFlipped);
-    }
-
-    function nextCard() { currentIndex = (currentIndex + 1) % currentLessonData.vocab.length; updateCard(); }
-    function prevCard() { currentIndex = (currentIndex - 1 + currentLessonData.vocab.length) % currentLessonData.vocab.length; updateCard(); }
-
-    function playAudio(text) {
-        if ('speechSynthesis' in window) {
-            const utterance = new SpeechSynthesisUtterance(text);
-            utterance.lang = 'zh-CN';
-            utterance.rate = 0.8;
-            window.speechSynthesis.speak(utterance);
-        }
-    }
-
-    function initWriter(char) {
-        const container = document.getElementById('character-target');
-        container.innerHTML = "";
-        writer = HanziWriter.create('character-target', char, {
-            width: 120, height: 120, padding: 5,
-            showOutline: true, strokeAnimationSpeed: 1, strokeColor: '#d93838'
-        });
-    }
-
-    // Quiz
-    let quizIndex = 0, score = 0, shuffledQuizList = [];
-    function initQuiz() {
-        quizIndex = 0; score = 0;
-        shuffledQuizList = [...currentLessonData.vocab].sort(() => Math.random() - 0.5);
-        loadQuizQuestion();
-    }
-
-    function loadQuizQuestion() {
-        document.getElementById('next-quiz-btn').style.display = 'none';
-        document.getElementById('quiz-score-display').innerText = '';
-        if (quizIndex >= shuffledQuizList.length) {
-            document.getElementById('quiz-question-text').innerText = "🎉 Hoàn thành trắc nghiệm!";
-            document.getElementById('quiz-options').innerHTML = '';
-            document.getElementById('quiz-score-display').innerText = `Điểm số: ${score} / ${currentLessonData.vocab.length}`;
-            document.getElementById('next-quiz-btn').innerText = "Làm lại";
-            document.getElementById('next-quiz-btn').style.display = 'block';
-            document.getElementById('next-quiz-btn').onclick = initQuiz;
-            return;
-        }
-        document.getElementById('next-quiz-btn').innerText = "Câu tiếp theo";
-        document.getElementById('next-quiz-btn').onclick = nextQuiz;
-        const currentQ = shuffledQuizList[quizIndex];
-        document.getElementById('quiz-progress').innerText = `Câu hỏi ${quizIndex + 1} / ${shuffledQuizList.length}`;
-        document.getElementById('quiz-question-text').innerHTML = `Nghĩa của từ <span style="color:var(--primary);">${currentQ.hanzi}</span> (${currentQ.pinyin}) là gì?`;
-        
-        let options = [currentQ.meaning];
-        while (options.length < 4 && options.length < currentLessonData.vocab.length) {
-            let randomOpt = currentLessonData.vocab[Math.floor(Math.random() * currentLessonData.vocab.length)].meaning;
-            if (!options.includes(randomOpt)) options.push(randomOpt);
-        }
-        options.sort(() => Math.random() - 0.5);
-        const optionsContainer = document.getElementById('quiz-options');
-        optionsContainer.innerHTML = '';
-        options.forEach(opt => {
-            const btn = document.createElement('button');
-            btn.className = 'option-btn';
-            btn.innerText = opt;
-            btn.onclick = () => checkAnswer(btn, opt, currentQ.meaning);
-            optionsContainer.appendChild(btn);
-        });
-    }
-
-    function checkAnswer(selectedBtn, selectedOpt, correctOpt) {
-        const allBtns = document.querySelectorAll('.option-btn');
-        allBtns.forEach(b => b.disabled = true);
-        if (selectedOpt === correctOpt) { selectedBtn.classList.add('correct'); score++; }
-        else { selectedBtn.classList.add('wrong'); allBtns.forEach(b => { if (b.innerText === correctOpt) b.classList.add('correct'); }); }
-        document.getElementById('next-quiz-btn').style.display = 'block';
-    }
-    function nextQuiz() { quizIndex++; loadQuizQuestion(); }
-
-    // Translate Exercise
-    let transIndex = 0;
-    function initTranslation() {
-        transIndex = 0;
-        loadTranslationQuestion();
-    }
-    function loadTranslationQuestion() {
-        document.getElementById('user-trans-input').value = "";
-        document.getElementById('user-trans-input').disabled = false;
-        document.getElementById('submit-trans-btn').style.display = 'block';
-        document.getElementById('next-trans-btn').style.display = 'none';
-        document.getElementById('trans-feedback').innerText = "";
-
-        const transList = currentLessonData.translate || [{prompt: "Dịch từ: " + currentLessonData.vocab[0].hanzi, answer: currentLessonData.vocab[0].meaning}];
-        if (transIndex >= transList.length) {
-            document.getElementById('trans-prompt').innerText = "🎉 Bạn đã hoàn thành toàn bộ bài tập dịch!";
-            document.getElementById('user-trans-input').style.display = 'none';
-            document.getElementById('submit-trans-btn').style.display = 'none';
-            return;
-        }
-        document.getElementById('user-trans-input').style.display = 'block';
-        document.getElementById('trans-progress').innerText = `Bài tập dịch ${transIndex + 1} / ${transList.length}`;
-        document.getElementById('trans-prompt').innerText = transList[transIndex].prompt;
-    }
-    function checkTranslation() {
-        const transList = currentLessonData.translate || [{prompt: "", answer: currentLessonData.vocab[0].meaning}];
-        const userVal = document.getElementById('user-trans-input').value.trim().toLowerCase();
-        const correctVal = transList[transIndex].answer.toLowerCase();
-        const feedback = document.getElementById('trans-feedback');
-        
-        if (userVal === "" ) {
-            feedback.style.color = "orange";
-            feedback.innerText = "Vui lòng nhập câu trả lời!";
-            return;
+            document.getElementById('lessonModal').classList.add('active');
         }
 
-        document.getElementById('user-trans-input').disabled = true;
-        document.getElementById('submit-trans-btn').style.display = 'none';
-        document.getElementById('next-trans-btn').style.display = 'block';
-
-        if (userVal === correctVal || correctVal.includes(userVal)) {
-            feedback.style.color = "#10b981";
-            feedback.innerText = "✅ Chính xác tuyệt vời!";
-        } else {
-            feedback.style.color = "#ef4444";
-            feedback.innerText = `❌ Chưa chính xác. Đáp án gợi ý: "${transList[transIndex].answer}"`;
+        function closeModal() {
+            document.getElementById('lessonModal').classList.remove('active');
         }
-    }
-    function nextTranslation() { transIndex++; loadTranslationQuestion(); }
 
-    // Minigame Match Cards
-    let firstCard = null, matchCount = 0;
-    function initGame() {
-        const board = document.getElementById('game-board');
-        board.innerHTML = "";
-        document.getElementById('game-message').innerText = "";
-        matchCount = 0;
-        firstCard = null;
-
-        let items = [...currentLessonData.vocab].slice(0, 4); // Lấy 4 từ đầu để ghép
-        let gameItems = [];
-        items.forEach((item, idx) => {
-            gameItems.push({ text: item.hanzi, id: idx, type: 'hanzi' });
-            gameItems.push({ text: item.meaning, id: idx, type: 'meaning' });
-        });
-        gameItems.sort(() => Math.random() - 0.5);
-
-        gameItems.forEach(item => {
-            const card = document.createElement('div');
-            card.className = 'game-card';
-            card.innerText = item.text;
-            card.dataset.id = item.id;
-            card.dataset.type = item.type;
-            card.onclick = () => selectGameCard(card);
-            board.appendChild(card);
-        });
-    }
-
-    function selectGameCard(card) {
-        if (card.classList.contains('matched') || card.classList.contains('selected')) return;
-        
-        if (!firstCard) {
-            firstCard = card;
-            card.classList.add('selected');
-        } else {
-            if (firstCard.dataset.id === card.dataset.id && firstCard.dataset.type !== card.dataset.type) {
-                firstCard.classList.remove('selected');
-                firstCard.classList.add('matched');
-                card.classList.add('matched');
-                firstCard = null;
-                matchCount++;
-                if (matchCount === 4) {
-                    document.getElementById('game-message').innerText = "🏆 Chúc mừng bạn đã ghép đúng tất cả các cặp từ!";
-                }
+        function toggleAnswer(btn) {
+            const answerDiv = btn.nextElementSibling;
+            if (answerDiv.classList.contains('show')) {
+                answerDiv.classList.remove('show');
+                btn.innerText = 'Xem đáp án';
             } else {
-                card.classList.add('selected');
-                setTimeout(() => {
-                    firstCard.classList.remove('selected');
-                    card.classList.remove('selected');
-                    firstCard = null;
-                }, 500);
+                answerDiv.classList.add('show');
+                btn.innerText = 'Ẩn đáp án';
             }
         }
-    }
 
-    // Khởi chạy trang chủ
-    renderLessons('all');
-</script>
+        window.onclick = function(event) {
+            const modal = document.getElementById('lessonModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+
+        // Khởi chạy khi load trang
+        renderLessons('all');
+    </script>
 </body>
 </html>
