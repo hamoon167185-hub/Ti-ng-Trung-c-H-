@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HSK 1-9 (Form 3.0)</title>
+    <title>Ôn Tập Chuẩn HSK 3.0 - Đủ 15 Bài</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- HanziWriter -->
@@ -21,36 +21,31 @@
     <!-- Header -->
     <header class="bg-indigo-600 text-white shadow-md p-4 sticky top-0 z-50">
         <div class="max-w-6xl mx-auto flex flex-wrap justify-between items-center gap-4">
-            
             <div class="flex items-center gap-3">
                 <div class="bg-indigo-700 p-2.5 rounded-xl text-white shadow-inner">
                     <i class="fa-solid fa-graduation-cap text-xl"></i>
                 </div>
                 <div>
-                    <h1 class="text-base sm:text-lg font-bold">Ôn Tập HSK (Form 3.0)</h1>
-                    <p class="text-xs text-indigo-200">Hệ thống tổng hợp chuẩn giáo trình 15 bài</p>
+                    <h1 class="text-base sm:text-lg font-bold">Hệ Thống Ôn Tập HSK 3.0</h1>
+                    <p class="text-xs text-indigo-200">Đầy đủ 15 bài học chuẩn giáo trình</p>
                 </div>
             </div>
 
-            <!-- Thông tin giáo viên & Zalo (Tự sửa theo ý bạn) -->
+            <!-- Thông tin giáo viên & Zalo (Thay đổi theo ý bạn) -->
             <div class="flex items-center gap-4 bg-indigo-700/50 px-4 py-2 rounded-xl border border-indigo-500/40">
                 <div class="text-right hidden sm:block">
-                    <p class="text-[11px] text-indigo-200 uppercase tracking-wider">cô Hà</p>
+                    <p class="text-[11px] text-indigo-200 uppercase tracking-wider">Giảng viên phụ trách</p>
                     <p class="text-sm font-semibold text-white">[Tên Giáo Viên]</p>
                 </div>
-                <a href="https://zalo.me/0962486745" target="_blank" class="bg-blue-500 hover:bg-blue-600 text-white px-3.5 py-1.5 rounded-lg text-sm font-medium flex items-center gap-2 shadow-sm transition">
+                <a href="https://zalo.me/0912345678" target="_blank" class="bg-blue-500 hover:bg-blue-600 text-white px-3.5 py-1.5 rounded-lg text-sm font-medium flex items-center gap-2 shadow-sm transition">
                     <i class="fa-solid fa-comments"></i> Liên hệ Zalo
                 </a>
             </div>
 
-            <!-- Bộ lọc cấp độ & bài học -->
+            <!-- Bộ lọc chọn bài -->
             <div class="flex items-center gap-2 w-full sm:w-auto">
-                <select id="hsk-level-select" class="bg-indigo-700 text-white border border-indigo-400 rounded px-3 py-1.5 focus:outline-none text-sm font-medium">
-                    <option value="1">HSK 1 (Chuẩn 15 Bài)</option>
-                    <option value="2" disabled>HSK 2 (Sắp ra mắt)</option>
-                </select>
-                <select id="lesson-select" class="bg-indigo-700 text-white border border-indigo-400 rounded px-3 py-1.5 focus:outline-none text-sm font-medium flex-1 sm:flex-none">
-                    <!-- 15 bài chuẩn giáo trình nạp động -->
+                <select id="lesson-select" class="bg-indigo-700 text-white border border-indigo-400 rounded px-3 py-1.5 focus:outline-none text-sm font-medium w-full sm:w-72">
+                    <!-- Nạp động 15 bài chuẩn HSK 3.0 -->
                 </select>
             </div>
         </div>
@@ -61,21 +56,21 @@
         
         <!-- Sidebar -->
         <aside class="lg:col-span-1 bg-white p-4 rounded-xl shadow-sm border border-slate-100 h-fit space-y-2">
-            <h2 class="font-semibold text-slate-400 uppercase text-xs tracking-wider mb-3">Nội dung ôn tập</h2>
-            <button onclick="switchTab('flashcard')" class="tab-btn w-full text-left px-3 py-2 rounded-lg font-medium transition active-tab bg-indigo-50 text-indigo-600 flex items-center gap-3">
+            <h2 class="font-semibold text-slate-400 uppercase text-xs tracking-wider mb-3">Chức năng học tập</h2>
+            <button onclick="switchTab('flashcard')" class="tab-btn w-full text-left px-3 py-2 rounded-lg font-medium transition bg-indigo-50 text-indigo-600 flex items-center gap-3">
                 <i class="fa-solid fa-clone w-5 text-center"></i> Flashcard Từ Vựng
             </button>
             <button onclick="switchTab('hanzi')" class="tab-btn w-full text-left px-3 py-2 rounded-lg font-medium transition text-slate-600 hover:bg-slate-50 flex items-center gap-3">
                 <i class="fa-solid fa-pen-brush w-5 text-center"></i> Xem Nét Chữ (Hanzi)
             </button>
             <button onclick="switchTab('grammar')" class="tab-btn w-full text-left px-3 py-2 rounded-lg font-medium transition text-slate-600 hover:bg-slate-50 flex items-center gap-3">
-                <i class="fa-solid fa-book-open w-5 text-center"></i> Ngữ Pháp 3.0
+                <i class="fa-solid fa-book-open w-5 text-center"></i> Ngữ Pháp Chuẩn 3.0
             </button>
             <button onclick="switchTab('listening')" class="tab-btn w-full text-left px-3 py-2 rounded-lg font-medium transition text-slate-600 hover:bg-slate-50 flex items-center gap-3">
-                <i class="fa-solid fa-headphones w-5 text-center"></i> Luyện Nghe & Audio
+                <i class="fa-solid fa-headphones w-5 text-center"></i> Luyện Nghe & Mẫu Câu
             </button>
             <button onclick="switchTab('quiz')" class="tab-btn w-full text-left px-3 py-2 rounded-lg font-medium transition text-slate-600 hover:bg-slate-50 flex items-center gap-3">
-                <i class="fa-solid fa-list-check w-5 text-center"></i> Trắc Nghiệm HSK
+                <i class="fa-solid fa-list-check w-5 text-center"></i> Trắc Nghiệm Bài Học
             </button>
             <button onclick="switchTab('translation')" class="tab-btn w-full text-left px-3 py-2 rounded-lg font-medium transition text-slate-600 hover:bg-slate-50 flex items-center gap-3">
                 <i class="fa-solid fa-language w-5 text-center"></i> Luyện Dịch AI Chấm
@@ -87,14 +82,14 @@
             
             <!-- 1. FLASHCARD -->
             <div id="tab-flashcard" class="tab-content space-y-6">
-                <h2 class="text-2xl font-bold text-slate-800 border-b pb-3">Flashcard Từ Vựng</h2>
+                <h2 id="section-title-fc" class="text-2xl font-bold text-slate-800 border-b pb-3">Flashcard Từ Vựng</h2>
                 <div class="flex justify-center items-center py-8">
                     <div class="perspective-1000 w-full max-w-md h-72 cursor-pointer" onclick="toggleCard(this)">
                         <div class="relative w-full h-full duration-500 transform-style-3d shadow-xl rounded-2xl" id="card-inner">
                             <div class="absolute inset-0 backface-hidden bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl flex flex-col justify-center items-center text-white p-6">
                                 <span id="fc-word" class="text-5xl font-bold mb-4">--</span>
                                 <span id="fc-pinyin" class="text-xl opacity-90">--</span>
-                                <span class="text-xs mt-6 opacity-70">(Nhấn để lật xem nghĩa)</span>
+                                <span class="text-xs mt-6 opacity-70">(Nhấn vào thẻ để lật xem nghĩa)</span>
                             </div>
                             <div class="absolute inset-0 backface-hidden rotate-y-180 bg-white border-2 border-indigo-100 rounded-2xl flex flex-col justify-center items-center p-6 text-slate-800">
                                 <h3 id="fc-meaning" class="text-2xl font-bold text-indigo-600 mb-2">--</h3>
@@ -135,7 +130,7 @@
 
             <!-- 4. LUYỆN NGHE & AUDIO -->
             <div id="tab-listening" class="tab-content hidden space-y-6">
-                <h2 class="text-2xl font-bold text-slate-800 border-b pb-3">Luyện Nghe & Phát Âm Chuẩn</h2>
+                <h2 class="text-2xl font-bold text-slate-800 border-b pb-3">Luyện Nghe & Mẫu Câu Giao Tiếp</h2>
                 <div class="bg-indigo-50 border border-indigo-100 p-4 rounded-xl flex items-center justify-between">
                     <div>
                         <h3 id="listen-title" class="font-bold text-indigo-950">Đang tải...</h3>
@@ -153,7 +148,7 @@
 
             <!-- 5. TRẮC NGHIỆM -->
             <div id="tab-quiz" class="tab-content hidden space-y-6">
-                <h2 class="text-2xl font-bold text-slate-800 border-b pb-3">Trắc Nghiệm Kiến Thức HSK</h2>
+                <h2 class="text-2xl font-bold text-slate-800 border-b pb-3">Trắc Nghiệm Kiến Thức Bài Học</h2>
                 <div id="quiz-container" class="space-y-4"></div>
                 <button onclick="submitQuiz()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-lg font-medium transition">Nộp bài kiểm tra</button>
                 <div id="quiz-result" class="font-semibold text-lg"></div>
@@ -184,240 +179,237 @@
         </section>
     </main>
 
-    <!-- JavaScript Dữ Liệu 15 Bài Chuẩn Tên & Ngữ Pháp HSK 3.0 -->
+    <!-- JavaScript Database 15 Bài Chuẩn HSK 3.0 -->
     <script>
-        const hskDatabase = {
+        const hsk1Lessons = {
             1: {
-                1: {
-                    title: "Bài 1: 你好 (Xin chào)",
-                    flashcards: [
-                        { word: "你", pinyin: "nǐ", meaning: "Bạn, anh, chị", type: "Đại từ", example: "你好！" },
-                        { word: "好", pinyin: "hǎo", meaning: "Tốt, khỏe", type: "Tính từ", example: "身体好。" },
-                        { word: "老师", pinyin: "lǎoshī", meaning: "Thầy/Cô giáo", type: "Danh từ", example: "王老师，你好！" },
-                        { word: "再见", pinyin: "zàijiàn", meaning: "Tạm biệt", type: "Thán từ", example: "老师，再见！" }
-                    ],
-                    grammar: [{ title: "Cách chào hỏi cơ bản & Đại từ '您'", content: "Dùng '你好' để chào hỏi thông thường. Thêm đại từ kính cẩn '您' (nín) khi muốn thể hiện sự tôn trọng với người lớn tuổi hoặc thầy cô." }],
-                    listening: { title: "Hội thoại bài 1: 你好", pinyin: "Nǐ hǎo, lǎoshī! - Nǐ hǎo!", dialogue: "<b>A:</b> 你好，老师！<br><b>B:</b> 你好！" },
-                    quiz: [{ q: "Từ '老师' có nghĩa là gì?", options: ["Học sinh", "Thầy/Cô giáo", "Bạn bè", "Bác sĩ"], correct: 1 }],
-                    translation: { prompt: "Dịch câu: 'Xin chào cô giáo!'", modelAnswer: "老师，你好！" }
-                },
-                2: {
-                    title: "Bài 2: 谢谢你 (Cảm ơn bạn)",
-                    flashcards: [
-                        { word: "谢谢", pinyin: "xièxie", meaning: "Cảm ơn", type: "Động từ", example: "谢谢你！" },
-                        { word: "不", pinyin: "bù", meaning: "Không", type: "Phó từ", example: "不客气。" },
-                        { word: "客气", pinyin: "kèqi", meaning: "Khách sáo", type: "Tính từ", example: "别客气。" },
-                        { word: "对不起", pinyin: "duìbuqǐ", meaning: "Xin lỗi", type: "Thán từ", example: "对不起！" }
-                    ],
-                    grammar: [{ title: "Phó từ phủ định '不' và Biến điệu thanh 4", content: "'不' (bù) đứng trước động từ/tính từ để phủ định. Khi đi trước một âm tiết mang thanh 4 khác, '不' biến âm thành thanh 2 (bú), ví dụ: 不客气 (bú kèqi)." }],
-                    listening: { title: "Hội thoại bài 2: 谢谢你", pinyin: "Xièxie nǐ! - Bú kèqi.", dialogue: "<b>A:</b> 谢谢你！<br><b>B:</b> 不客气。" },
-                    quiz: [{ q: "Đáp lại '谢谢', ta thường dùng cấu trúc nào?", options: ["再见", "不客气", "对不起", "你好"], correct: 1 }],
-                    translation: { prompt: "Dịch câu: 'Không có chi / Không khách sáo.'", modelAnswer: "不客气。" }
-                },
-                3: {
-                    title: "Bài 3: 你叫什么名字 (Bạn tên là gì)",
-                    flashcards: [
-                        { word: "叫", pinyin: "jiào", meaning: "Tên là, gọi là", type: "Động từ", example: "我叫大卫。" },
-                        { word: "什么", pinyin: "shénme", meaning: "Cái gì, gì", type: "Đại từ", example: "什么名字？" },
-                        { word: "名字", pinyin: "míngzi", meaning: "Tên", type: "Danh từ", example: "你叫什么名字？" },
-                        { word: "我", pinyin: "wǒ", meaning: "Tôi, ta", type: "Đại từ", example: "我是学生。" }
-                    ],
-                    grammar: [{ title: "Câu hỏi có từ để hỏi '什么'", content: "Dùng đại từ nghi vấn '什么' để hỏi tên, sự vật. Cấu trúc câu hỏi giữ nguyên trật tự chủ ngữ: Chủ ngữ + 叫 + 什么 + 名字？" }],
-                    listening: { title: "Hội thoại bài 3: 你叫什么名字", pinyin: "Nǐ jiào shénme míngzi? - Wǒ jiào Lǐ Wén.", dialogue: "<b>A:</b> 你叫什么名字？<br><b>B:</b> 我叫李文。" },
-                    quiz: [{ q: "Từ '名字' có nghĩa là gì?", options: ["Tuổi", "Tên", "Quốc tịch", "Nghề nghiệp"], correct: 1 }],
-                    translation: { prompt: "Dịch câu: 'Bạn tên là gì?'", modelAnswer: "你叫什么名字？" }
-                },
-                4: {
-                    title: "Bài 4: 他是谁 (Anh ấy là ai)",
-                    flashcards: [
-                        { word: "他", pinyin: "tā", meaning: "Anh ấy, ông ấy", type: "Đại từ", example: "他是谁？" },
-                        { word: "是", pinyin: "shì", meaning: "Là", type: "Động từ", example: "他是我的老师。" },
-                        { word: "谁", pinyin: "shéi / shuí", meaning: "Ai", type: "Đại từ", example: "他是谁？" },
-                        { word: "同学", pinyin: "tóngxué", meaning: "Bạn học", type: "Danh từ", example: "我们是同学。" }
-                    ],
-                    grammar: [{ title: "Động từ '是' và Đại từ nghi vấn '谁'", content: "Động từ '是' dùng để diễn tả sự đồng nhất hoặc phán đoán (A là B). '谁' dùng để hỏi về người (Ai)." }],
-                    listening: { title: "Hội thoại bài 4: 他是谁", pinyin: "Tā shì shéi? - Tā shì wǒ péngyou.", dialogue: "<b>A:</b> 他是谁？<br><b>B:</b> 他是我的朋友。" },
-                    quiz: [{ q: "Từ '谁' dùng để hỏi về đối tượng nào?", options: ["Địa điểm", "Thời gian", "Người (Ai)", "Số lượng"], correct: 2 }],
-                    translation: { prompt: "Dịch câu: 'Họ là ai?'", modelAnswer: "他们是谁？" }
-                },
-                5: {
-                    title: "Bài 5: 你是哪国人 (Bạn là người nước nào)",
-                    flashcards: [
-                        { word: "哪", pinyin: "nǎ", meaning: "Nào", type: "Đại từ", example: "哪国人？" },
-                        { word: "国", pinyin: "guó", meaning: "Nước, quốc gia", type: "Danh từ", example: "中国" },
-                        { word: "人", pinyin: "rén", meaning: "Người", type: "Danh từ", example: "越南人" },
-                        { word: "哪国人", pinyin: "nǎ guó rén", meaning: "Người nước nào", type: "Cụm từ", example: "你是哪国人？" }
-                    ],
-                    grammar: [{ title: "Cấu trúc hỏi quốc tịch với '哪国人'", content: "Cấu trúc: Chủ ngữ + 是 + 哪国人？ Dùng '哪' kết hợp với danh từ quốc gia để hỏi xuất xứ." }],
-                    listening: { title: "Hội thoại bài 5: 你是哪国人", pinyin: "Nǐ shì nǎ guó rén? - Wǒ shì Zhōngguó rén.", dialogue: "<b>A:</b> 你是哪国人？<br><b>B:</b> 我是中国人。" },
-                    quiz: [{ q: "Từ '中国' có nghĩa là gì?", options: ["Việt Nam", "Trung Quốc", "Mỹ", "Anh"], correct: 1 }],
-                    translation: { prompt: "Dịch câu: 'Tôi là người Việt Nam.'", modelAnswer: "我是越南人。" }
-                },
-                6: {
-                    title: "Bài 6: 这is我妈妈 (Đây là mẹ tôi)",
-                    flashcards: [
-                        { word: "这", pinyin: "zhè", meaning: "Đây, này", type: "Đại từ", example: "这是什么？" },
-                        { word: "妈妈", pinyin: "māma", meaning: "Mẹ", type: "Danh từ", example: "我爱妈妈。" },
-                        { word: "爸爸", pinyin: "bàba", meaning: "Bố", type: "Danh từ", example: "我爸爸是医生。" },
-                        { word: "家", pinyin: "jiā", meaning: "Nhà, gia đình", type: "Danh từ", example: "我家有四口人。" }
-                    ],
-                    grammar: [{ title: "Đại từ chỉ thị '这' và '那'", content: "'这' dùng để chỉ người hoặc vật ở gần (Đây/Này), đối lập với '那' (Kia/Đó) ở xa." }],
-                    listening: { title: "Hội thoại bài 6: 这是我妈妈", pinyin: "Zhè shì wǒ māma.", dialogue: "<b>A:</b> 这是谁？<br><b>B:</b> 这是我妈妈。" },
-                    quiz: [{ q: "Từ '妈妈' có nghĩa là gì?", options: ["Bố", "Mẹ", "Chị gái", "Em gái"], correct: 1 }],
-                    translation: { prompt: "Dịch câu: 'Đây là mẹ tôi.'", modelAnswer: "这是我妈妈。" }
-                },
-                7: {
-                    title: "Bài 7: 他 Kankan 书 (Anh ấy đọc sách)",
-                    flashcards: [
-                        { word: "字", pinyin: "zì", meaning: "Chữ", type: "Danh từ", example: "写汉字" },
-                        { word: "书", pinyin: "shū", meaning: "Sách", type: "Danh từ", example: "看书" },
-                        { word: "汉字", pinyin: "hànzì", meaning: "Chữ Hán", type: "Danh từ", example: "汉字很难。" },
-                        { word: "写", pinyin: "xiě", meaning: "Viết", type: "Động từ", example: "写字" }
-                    ],
-                    grammar: [{ title: "Động từ ly hợp cơ bản", content: "Các từ như 看书 (đọc sách), 写字 (viết chữ) gồm một động từ kết hợp với tân ngữ tạo thành cấu trúc ly hợp." }],
-                    listening: { title: "Hội thoại bài 7", pinyin: "Nǐ xie hanzì ma?", dialogue: "<b>A:</b> 你会写汉字吗？<br><b>B:</b> 我会写。" },
-                    quiz: [{ q: "Từ '书' có nghĩa là gì?", options: ["Vở", "Sách", "Bút", "Thước"], correct: 1 }],
-                    translation: { prompt: "Dịch câu: 'Tôi học tiếng Trung.'", modelAnswer: "我学习汉语。" }
-                },
-                8: {
-                    title: "Bài 8: 他 Kankan 几 岁 (Anh ấy mấy tuổi)",
-                    flashcards: [
-                        { word: "吃", pinyin: "chī", meaning: "Ăn", type: "Động từ", example: "吃苹果" },
-                        { word: "苹果", pinyin: "píngguǒ", meaning: "Quả táo", type: "Danh từ", example: "吃苹果" },
-                        { word: "喝", pinyin: "hē", meaning: "Uống", type: "Động từ", example: "喝水" },
-                        { word: "水", pinyin: "shuǐ", meaning: "Nước", type: "Danh từ", example: "喝水" }
-                    ],
-                    grammar: [{ title: "Cấu trúc diễn tả nhu cầu ăn uống", content: "Sử dụng động từ 吃 (ăn) và 喝 (uống) đi trực tiếp với danh từ thực phẩm, đồ uống ở phía sau." }],
-                    listening: { title: "Hội thoại bài 8", pinyin: "Nǐ chī shénme?", dialogue: "<b>A:</b> 你吃什么？<br><b>B:</b> 我吃苹果。" },
-                    quiz: [{ q: "Từ '喝' dùng cho hành động nào?", options: ["Ăn", "Uống", "Ngủ", "Xem"], correct: 1 }],
-                    translation: { prompt: "Dịch câu: 'Tôi uống nước.'", modelAnswer: "我喝水。" }
-                },
-                9: {
-                    title: "Bài 9: 这个多少钱 (Cái này bao nhiêu tiền)",
-                    flashcards: [
-                        { word: "买", pinyin: "mǎi", meaning: "Mua", type: "Động từ", example: "买东西" },
-                        { word: "东西", pinyin: "dōngxi", meaning: "Đồ đạc, đồ vật", type: "Danh từ", example: "买东西" },
-                        { word: "多少", pinyin: "duōshao", meaning: "Bao nhiêu", type: "Đại từ", example: "多少钱？" },
-                        { word: "钱", pinyin: "qián", meaning: "Tiền", type: "Danh từ", example: "多少钱？" }
-                    ],
-                    grammar: [{ title: "Cách hỏi giá cả với '多少钱'", content: "Cấu trúc hỏi giá tiền: [Tên đồ vật] + 多少钱？ (Hỏi số lượng lớn hơn 10)." }],
-                    listening: { title: "Hội thoại bài 9", pinyin: "Zhè gè duōshao qián?", dialogue: "<b>A:</b> 这个多少钱？<br><b>B:</b> 五块钱。" },
-                    quiz: [{ q: "Cụm từ '多少钱' dùng để hỏi gì?", options: ["Thời gian", "Giá tiền", "Số lượng người", "Khoảng cách"], correct: 1 }],
-                    translation: { prompt: "Dịch câu: 'Cái này bao nhiêu tiền?'", modelAnswer: "这个多少钱？" }
-                },
-                10: {
-                    title: "Bài 10: 她女儿今年三岁了 (Con gái cô ấy năm nay 3 tuổi)",
-                    flashcards: [
-                        { word: "几", pinyin: "jǐ", meaning: "Mấy", type: "Đại từ", example: "几个人？" },
-                        { word: "岁", pinyin: "suì", meaning: "Tuổi", type: "Danh từ", example: "你几岁了？" },
-                        { word: "个", pinyin: "gè", meaning: "Cái, người (lượng từ)", type: "Lượng từ", example: "一个学生" },
-                        { word: "两", pinyin: "liǎng", meaning: "Hai (đứng trước lượng từ)", type: "Số từ", example: "两个人" }
-                    ],
-                    grammar: [{ title: "Cách dùng lượng từ '个' và số từ '两'", content: "'个' là lượng từ phổ biến nhất. Khi đếm số lượng 2 đứng trước lượng từ, bắt buộc dùng '两' (liǎng) thay vì '二' (èr)." }],
-                    listening: { title: "Hội thoại bài 10", pinyin: "Nǐ de nǚ'ér jǐ suì le?", dialogue: "<b>A:</b> 你女儿几岁了？<br><b>B:</b> 她七岁了。" },
-                    quiz: [{ q: "Khi nói '2 người', ta dùng từ nào trước lượng từ?", options: ["二", "两", "三", "四"], correct: 1 }],
-                    translation: { prompt: "Dịch câu: 'Bạn mấy tuổi rồi?'", modelAnswer: "你几岁了？" }
-                },
-                11: {
-                    title: "Bài 11: 我能坐这儿吗 (Tôi ngồi đây được không)",
-                    flashcards: [
-                        { word: "会", pinyin: "huì", meaning: "Biết (có kỹ năng)", type: "Động từ năng nguyện", example: "会说汉语" },
-                        { word: "说", pinyin: "shuō", meaning: "Nói", type: "Động từ", example: "说汉语" },
-                        { word: "话", pinyin: "huà", meaning: "Lời nói", type: "Danh từ", example: "说话" },
-                        { word: "菜", pinyin: "cài", meaning: "Món ăn, rau", type: "Danh từ", example: "中国菜" }
-                    ],
-                    grammar: [{ title: "Động từ năng nguyện '会'", content: "Biểu thị năng lực, kỹ năng đạt được thông qua học tập hoặc rèn luyện (Biết làm gì đó)." }],
-                    listening: { title: "Hội thoại bài 11", pinyin: "Nǐ huì shuō hànyǔ ma?", dialogue: "<b>A:</b> 你会说汉语吗？<br><b>B:</b> 我会说一点儿。" },
-                    quiz: [{ q: "Từ '会' trong '会说汉语' biểu thị điều gì?", options: ["Khả năng/Kỹ năng", "Sự cho phép", "Nguyện vọng", "Bắt buộc"], correct: 0 }],
-                    translation: { prompt: "Dịch câu: 'Tôi biết nói tiếng Trung.'", modelAnswer: "我会说汉语。" }
-                },
-                12: {
-                    title: "Bài 12: 星期天你在家做什么 (Chủ nhật bạn ở nhà làm gì)",
-                    flashcards: [
-                        { word: "错", pinyin: "cuò", meaning: "Sai", type: "Tính từ", example: "不错" },
-                        { word: "对", pinyin: "duì", meaning: "Đúng", type: "Tính từ", example: "对的" },
-                        { word: "天气", pinyin: "tiānqì", meaning: "Thời tiết", type: "Danh từ", example: "今天天气很好。" },
-                        { word: "热", pinyin: "rè", meaning: "Nóng", type: "Tính từ", example: "今天很热。" }
-                    ],
-                    grammar: [{ title: "Cấu trúc thời gian làm trạng ngữ chỉ thời gian", content: "Trạng ngữ chỉ thời gian thường đứng trước chủ ngữ hoặc ngay sau chủ ngữ trong câu tiếng Trung." }],
-                    listening: { title: "Hội thoại bài 12", pinyin: "Jīntiān tiānqì zěnmeyàng?", dialogue: "<b>A:</b> 今天天气怎么样？<br><b>B:</b> 很好，不冷不热。" },
-                    quiz: [{ q: "Từ '天气' có nghĩa là gì?", options: ["Khí hậu", "Thời tiết", "Mùa màng", "Nhiệt độ"], correct: 1 }],
-                    translation: { prompt: "Dịch câu: 'Hôm nay thời tiết rất đẹp.'", modelAnswer: "今天天气很好。" }
-                },
-                13: {
-                    title: "Bài 13: 他去哪儿工作 (Anh ấy đi đâu làm việc)",
-                    flashcards: [
-                        { word: "坐", pinyin: "zuò", meaning: "Ngồi, đi (phương tiện)", type: "Động từ", example: "坐飞机" },
-                        { word: "飞机", pinyin: "fēijī", meaning: "Máy bay", type: "Danh từ", example: "坐飞机" },
-                        { word: "去", pinyin: "qù", meaning: "Đi", type: "Động từ", example: "去医院" },
-                        { word: "医院", pinyin: "yīyuàn", meaning: "Bệnh viện", type: "Danh từ", example: "去医院" }
-                    ],
-                    grammar: [{ title: "Động từ chỉ phương hướng '去'", content: "Cấu trúc biểu thị đi đến đâu đó: 去 + [Địa điểm]. Ví dụ: 去医院 (Đi bệnh viện)." }],
-                    listening: { title: "Hội thoại bài 13", pinyin: "Nǐ qù nǎr?", dialogue: "<b>A:</b> 你去哪儿？<br><b>B:</b> 我去医院。" },
-                    quiz: [{ q: "Từ '飞机' có nghĩa là gì?", options: ["Tàu hỏa", "Xe buýt", "Máy bay", "Xe đạp"], correct: 2 }],
-                    translation: { prompt: "Dịch câu: 'Bạn đi đâu vậy?'", modelAnswer: "你去哪儿？" }
-                },
-                14: {
-                    title: "Bài 14: 她买了很多衣服 (Cô ấy mua rất nhiều quần áo)",
-                    flashcards: [
-                        { word: "在", pinyin: "zài", meaning: "Ở tại, đang", type: "Giới từ / Động từ", example: "在家" },
-                        { word: "家", pinyin: "jiā", meaning: "Nhà", type: "Danh từ", example: "在家" },
-                        { word: "哪儿", pinyin: "nǎr", meaning: "Ở đâu, đâu", type: "Đại từ", example: "你在哪儿？" },
-                        { word: "工作", pinyin: "gōngzuò", meaning: "Công việc, làm việc", type: "Danh từ / Động từ", example: "努力工作" }
-                    ],
-                    grammar: [{ title: "Cấu trúc chỉ vị trí với '在'", content: "Chủ ngữ + 在 + [Địa điểm] để diễn tả vị trí đối tượng đang ở hoặc thực hiện hành động." }],
-                    listening: { title: "Hội thoại bài 14", pinyin: "Bàba zài nǎr?", dialogue: "<b>A:</b> 爸爸在哪儿？<br><b>B:</b> 爸爸在医院工作。" },
-                    quiz: [{ q: "Từ '工作' có thể đóng vai trò từ loại nào?", options: ["Danh từ", "Động từ", "Cả danh từ và động từ", "Tính từ"], correct: 2 }],
-                    translation: { prompt: "Dịch câu: 'Bố bạn làm việc ở đâu?'", modelAnswer: "你爸爸在哪儿工作？" }
-                },
-                15: {
-                    title: "Bài 15: 他在 华 学习 汉语 (Anh ấy học tiếng Trung ở trường)",
-                    flashcards: [
-                        { word: "时候", pinyin: "shíhou", meaning: "Khi, lúc", type: "Danh từ", example: "什么时候" },
-                        { word: "下雨", pinyin: "xià yǔ", meaning: "Mưa", type: "Động từ", example: "下雨了" },
-                        { word: "爱", pinyin: "ài", meaning: "Yêu, thích", type: "Động từ", example: "我爱你" },
-                        { word: "高兴", pinyin: "gāoxìng", meaning: "Vui vẻ, hạnh phúc", type: "Tính từ", example: "很高兴" }
-                    ],
-                    grammar: [{ title: "Tổng kết các điểm ngữ pháp nền tảng HSK 1", content: "Ôn tập toàn bộ trật tự câu cơ bản S-V-O, cách dùng từ chỉ thời gian, địa điểm và các trợ từ ngữ khí thường gặp." }],
-                    listening: { title: "Hội thoại bài 15", pinyin: "Jīntiān huì xià yǔ ma?", dialogue: "<b>A:</b> 今天会下雨吗？<br><b>B:</b> 不会，天气很好。" },
-                    quiz: [{ q: "Từ '下雨' có nghĩa là gì?", options: ["Trời nắng", "Trời mưa", "Có gió", "Có tuyết"], correct: 1 }],
-                    translation: { prompt: "Dịch câu: 'Rất vui được gặp bạn.'", modelAnswer: "很高兴认识你。" }
-                }
+                title: "Bài 1: 你好 (Xin chào)",
+                flashcards: [
+                    { word: "你", pinyin: "nǐ", meaning: "Bạn, anh, chị", type: "Đại từ", example: "你好！" },
+                    { word: "好", pinyin: "hǎo", meaning: "Tốt, khỏe", type: "Tính từ", example: "身体好。" },
+                    { word: "老师", pinyin: "lǎoshī", meaning: "Thầy/Cô giáo", type: "Danh từ", example: "王老师，你好！" },
+                    { word: "再见", pinyin: "zàijiàn", meaning: "Tạm biệt", type: "Thán từ", example: "老师，再见！" }
+                ],
+                grammar: [{ title: "Cách chào hỏi cơ bản & Đại từ '您'", content: "Dùng '你好' để chào hỏi thông thường. Thêm đại từ kính cẩn '您' (nín) khi muốn thể hiện sự tôn trọng với người lớn tuổi hoặc thầy cô." }],
+                listening: { title: "Hội thoại bài 1: 你好", pinyin: "Nǐ hǎo, lǎoshī! - Nǐ hǎo!", dialogue: "<b>A:</b> 你好，老师！<br><b>B:</b> 你好！" },
+                quiz: [{ q: "Từ '老师' có nghĩa là gì?", options: ["Học sinh", "Thầy/Cô giáo", "Bạn bè", "Bác sĩ"], correct: 1 }],
+                translation: { prompt: "Dịch câu: 'Xin chào cô giáo!'", modelAnswer: "老师，你好！" }
+            },
+            2: {
+                title: "Bài 2: 谢谢你 (Cảm ơn bạn)",
+                flashcards: [
+                    { word: "谢谢", pinyin: "xièxie", meaning: "Cảm ơn", type: "Động từ", example: "谢谢你！" },
+                    { word: "不", pinyin: "bù", meaning: "Không", type: "Phó từ", example: "不客气。" },
+                    { word: "客气", pinyin: "kèqi", meaning: "Khách sáo", type: "Tính từ", example: "别客气。" },
+                    { word: "对不起", pinyin: "duìbuqǐ", meaning: "Xin lỗi", type: "Thán từ", example: "对不起！" }
+                ],
+                grammar: [{ title: "Phó từ phủ định '不' và Biến điệu thanh 4", content: "'不' (bù) đứng trước động từ/tính từ để phủ định. Khi đi trước một âm tiết mang thanh 4 khác, '不' biến âm thành thanh 2 (bú), ví dụ: 不客气 (bú kèqi)." }],
+                listening: { title: "Hội thoại bài 2: 谢谢你", pinyin: "Xièxie nǐ! - Bú kèqi.", dialogue: "<b>A:</b> 谢谢你！<br><b>B:</b> 不客气。" },
+                quiz: [{ q: "Đáp lại '谢谢', ta thường dùng cấu trúc nào?", options: ["再见", "不客气", "对不起", "你好"], correct: 1 }],
+                translation: { prompt: "Dịch câu: 'Không có chi / Không khách sáo.'", modelAnswer: "不客气。" }
+            },
+            3: {
+                title: "Bài 3: 你叫什么名字 (Bạn tên là gì)",
+                flashcards: [
+                    { word: "叫", pinyin: "jiào", meaning: "Tên là, gọi là", type: "Động từ", example: "我叫大卫。" },
+                    { word: "什么", pinyin: "shénme", meaning: "Cái gì, gì", type: "Đại từ", example: "什么名字？" },
+                    { word: "名字", pinyin: "míngzi", meaning: "Tên", type: "Danh từ", example: "你叫什么名字？" },
+                    { word: "我", pinyin: "wǒ", meaning: "Tôi, ta", type: "Đại từ", example: "我是学生。" }
+                ],
+                grammar: [{ title: "Câu hỏi có từ để hỏi '什么'", content: "Dùng đại từ nghi vấn '什么' để hỏi tên, sự vật. Cấu trúc câu hỏi giữ nguyên trật tự chủ ngữ: Chủ ngữ + 叫 + 什么 + 名字？" }],
+                listening: { title: "Hội thoại bài 3: 你叫什么名字", pinyin: "Nǐ jiào shénme míngzi? - Wǒ jiào Lǐ Wén.", dialogue: "<b>A:</b> 你叫什么名字？<br><b>B:</b> 我叫李文。" },
+                quiz: [{ q: "Từ '名字' có nghĩa là gì?", options: ["Tuổi", "Tên", "Quốc tịch", "Nghề nghiệp"], correct: 1 }],
+                translation: { prompt: "Dịch câu: 'Bạn tên là gì?'", modelAnswer: "你叫什么名字？" }
+            },
+            4: {
+                title: "Bài 4: 他是谁 (Anh ấy là ai)",
+                flashcards: [
+                    { word: "他", pinyin: "tā", meaning: "Anh ấy, ông ấy", type: "Đại từ", example: "他是谁？" },
+                    { word: "是", pinyin: "shì", meaning: "Là", type: "Động từ", example: "他是我的老师。" },
+                    { word: "谁", pinyin: "shéi / shuí", meaning: "Ai", type: "Đại từ", example: "他是谁？" },
+                    { word: "同学", pinyin: "tóngxué", meaning: "Bạn học", type: "Danh từ", example: "我们是同学。" }
+                ],
+                grammar: [{ title: "Động từ '是' và Đại từ nghi vấn '谁'", content: "Động từ '是' dùng để diễn tả sự đồng nhất hoặc phán đoán (A là B). '谁' dùng để hỏi về người (Ai)." }],
+                listening: { title: "Hội thoại bài 4: 他是谁", pinyin: "Tā shì shéi? - Tā shì wǒ péngyou.", dialogue: "<b>A:</b> 他是谁？<br><b>B:</b> 他是我的朋友。" },
+                quiz: [{ q: "Từ '谁' dùng để hỏi về đối tượng nào?", options: ["Địa điểm", "Thời gian", "Người (Ai)", "Số lượng"], correct: 2 }],
+                translation: { prompt: "Dịch câu: 'Họ là ai?'", modelAnswer: "他们是谁？" }
+            },
+            5: {
+                title: "Bài 5: 你是哪国人 (Bạn là người nước nào)",
+                flashcards: [
+                    { word: "哪", pinyin: "nǎ", meaning: "Nào", type: "Đại từ", example: "哪国人？" },
+                    { word: "国", pinyin: "guó", meaning: "Nước, quốc gia", type: "Danh từ", example: "中国" },
+                    { word: "人", pinyin: "rén", meaning: "Người", type: "Danh từ", example: "越南人" },
+                    { word: "哪国人", pinyin: "nǎ guó rén", meaning: "Người nước nào", type: "Cụm từ", example: "你是哪国人？" }
+                ],
+                grammar: [{ title: "Cấu trúc hỏi quốc tịch với '哪国人'", content: "Cấu trúc: Chủ ngữ + 是 + 哪国人？ Dùng '哪' kết hợp với danh từ quốc gia để hỏi xuất xứ." }],
+                listening: { title: "Hội thoại bài 5: 你是哪国人", pinyin: "Nǐ shì nǎ guó rén? - Wǒ shì Zhōngguó rén.", dialogue: "<b>A:</b> 你是哪国人？<br><b>B:</b> 我是中国人。" },
+                quiz: [{ q: "Từ '中国' có nghĩa là gì?", options: ["Việt Nam", "Trung Quốc", "Mỹ", "Anh"], correct: 1 }],
+                translation: { prompt: "Dịch câu: 'Tôi là người Việt Nam.'", modelAnswer: "我是越南人。" }
+            },
+            6: {
+                title: "Bài 6: 这是我妈妈 (Đây là mẹ tôi)",
+                flashcards: [
+                    { word: "这", pinyin: "zhè", meaning: "Đây, này", type: "Đại từ", example: "这是什么？" },
+                    { word: "妈妈", pinyin: "māma", meaning: "Mẹ", type: "Danh từ", example: "我爱妈妈。" },
+                    { word: "爸爸", pinyin: "bàba", meaning: "Bố", type: "Danh từ", example: "我爸爸是医生。" },
+                    { word: "家", pinyin: "jiā", meaning: "Nhà, gia đình", type: "Danh từ", example: "我家有四口人。" }
+                ],
+                grammar: [{ title: "Đại từ chỉ thị '这' và '那'", content: "'这' dùng để chỉ người hoặc vật ở gần (Đây/Này), đối lập với '那' (Kia/Đó) ở xa." }],
+                listening: { title: "Hội thoại bài 6: 这是我妈妈", pinyin: "Zhè shì wǒ māma.", dialogue: "<b>A:</b> 这是谁？<br><b>B:</b> 这是我妈妈。" },
+                quiz: [{ q: "Từ '妈妈' có nghĩa là gì?", options: ["Bố", "Mẹ", "Chị gái", "Em gái"], correct: 1 }],
+                translation: { prompt: "Dịch câu: 'Đây là mẹ tôi.'", modelAnswer: "这是我妈妈。" }
+            },
+            7: {
+                title: "Bài 7: 他看书 (Anh ấy đọc sách)",
+                flashcards: [
+                    { word: "字", pinyin: "zì", meaning: "Chữ", type: "Danh từ", example: "写汉字" },
+                    { word: "书", pinyin: "shū", meaning: "Sách", type: "Danh từ", example: "看书" },
+                    { word: "汉字", pinyin: "hànzì", meaning: "Chữ Hán", type: "Danh từ", example: "汉字很难。" },
+                    { word: "写", pinyin: "xiě", meaning: "Viết", type: "Động từ", example: "写字" }
+                ],
+                grammar: [{ title: "Động từ ly hợp cơ bản", content: "Các từ như 看书 (đọc sách), 写字 (viết chữ) gồm một động từ kết hợp với tân ngữ tạo thành cấu trúc ly hợp." }],
+                listening: { title: "Hội thoại bài 7", pinyin: "Nǐ xie hanzì ma?", dialogue: "<b>A:</b> 你会写汉字吗？<br><b>B:</b> 我会写。" },
+                quiz: [{ q: "Từ '书' có nghĩa là gì?", options: ["Vở", "Sách", "Bút", "Thước"], correct: 1 }],
+                translation: { prompt: "Dịch câu: 'Tôi học tiếng Trung.'", modelAnswer: "我学习汉语。" }
+            },
+            8: {
+                title: "Bài 8: 他几岁 (Anh ấy mấy tuổi)",
+                flashcards: [
+                    { word: "吃", pinyin: "chī", meaning: "Ăn", type: "Động từ", example: "吃苹果" },
+                    { word: "苹果", pinyin: "píngguǒ", meaning: "Quả táo", type: "Danh từ", example: "吃苹果" },
+                    { word: "喝", pinyin: "hē", meaning: "Uống", type: "Động từ", example: "喝水" },
+                    { word: "水", pinyin: "shuǐ", meaning: "Nước", type: "Danh từ", example: "喝水" }
+                ],
+                grammar: [{ title: "Cấu trúc diễn tả nhu cầu ăn uống", content: "Sử dụng động từ 吃 (ăn) và 喝 (uống) đi trực tiếp với danh từ thực phẩm, đồ uống ở phía sau." }],
+                listening: { title: "Hội thoại bài 8", pinyin: "Nǐ chī shénme?", dialogue: "<b>A:</b> 你吃什么？<br><b>B:</b> 我吃苹果。" },
+                quiz: [{ q: "Từ '喝' dùng cho hành động nào?", options: ["Ăn", "Uống", "Ngủ", "Xem"], correct: 1 }],
+                translation: { prompt: "Dịch câu: 'Tôi uống nước.'", modelAnswer: "我喝水。" }
+            },
+            9: {
+                title: "Bài 9: 这个多少钱 (Cái này bao nhiêu tiền)",
+                flashcards: [
+                    { word: "买", pinyin: "mǎi", meaning: "Mua", type: "Động từ", example: "买东西" },
+                    { word: "东西", pinyin: "dōngxi", meaning: "Đồ đạc, đồ vật", type: "Danh từ", example: "买东西" },
+                    { word: "多少", pinyin: "duōshao", meaning: "Bao nhiêu", type: "Đại từ", example: "多少钱？" },
+                    { word: "钱", pinyin: "qián", meaning: "Tiền", type: "Danh từ", example: "多少钱？" }
+                ],
+                grammar: [{ title: "Cách hỏi giá cả với '多少钱'", content: "Cấu trúc hỏi giá tiền: [Tên đồ vật] + 多少钱？ (Hỏi số lượng lớn hơn 10)." }],
+                listening: { title: "Hội thoại bài 9", pinyin: "Zhè gè duōshao qián?", dialogue: "<b>A:</b> 这个多少钱？<br><b>B:</b> 五块钱。" },
+                quiz: [{ q: "Cụm từ '多少钱' dùng để hỏi gì?", options: ["Thời gian", "Giá tiền", "Số lượng người", "Khoảng cách"], correct: 1 }],
+                translation: { prompt: "Dịch câu: 'Cái này bao nhiêu tiền?'", modelAnswer: "这个多少钱？" }
+            },
+            10: {
+                title: "Bài 10: 她女儿今年三岁了 (Con gái cô ấy năm nay 3 tuổi)",
+                flashcards: [
+                    { word: "几", pinyin: "jǐ", meaning: "Mấy", type: "Đại từ", example: "几个人？" },
+                    { word: "岁", pinyin: "suì", meaning: "Tuổi", type: "Danh từ", example: "你几岁了？" },
+                    { word: "个", pinyin: "gè", meaning: "Cái, người (lượng từ)", type: "Lượng từ", example: "一个学生" },
+                    { word: "两", pinyin: "liǎng", meaning: "Hai (đứng trước lượng từ)", type: "Số từ", example: "两个人" }
+                ],
+                grammar: [{ title: "Cách dùng lượng từ '个' và số từ '两'", content: "'个' là lượng từ phổ biến nhất. Khi đếm số lượng 2 đứng trước lượng từ, bắt buộc dùng '两' (liǎng) thay vì '二' (èr)." }],
+                listening: { title: "Hội thoại bài 10", pinyin: "Nǐ de nǚ'ér jǐ suì le?", dialogue: "<b>A:</b> 你女儿几岁了？<br><b>B:</b> 她七岁了。" },
+                quiz: [{ q: "Khi nói '2 người', ta dùng từ nào trước lượng từ?", options: ["二", "两", "三", "四"], correct: 1 }],
+                translation: { prompt: "Dịch câu: 'Bạn mấy tuổi rồi?'", modelAnswer: "你几岁了？" }
+            },
+            11: {
+                title: "Bài 11: 我能坐这儿吗 (Tôi ngồi đây được không)",
+                flashcards: [
+                    { word: "会", pinyin: "huì", meaning: "Biết (có kỹ năng)", type: "Động từ năng nguyện", example: "会说汉语" },
+                    { word: "说", pinyin: "shuō", meaning: "Nói", type: "Động từ", example: "说汉语" },
+                    { word: "话", pinyin: "huà", meaning: "Lời nói", type: "Danh từ", example: "说话" },
+                    { word: "菜", pinyin: "cài", meaning: "Món ăn, rau", type: "Danh từ", example: "中国菜" }
+                ],
+                grammar: [{ title: "Động từ năng nguyện '会'", content: "Biểu thị năng lực, kỹ năng đạt được thông qua học tập hoặc rèn luyện (Biết làm gì đó)." }],
+                listening: { title: "Hội thoại bài 11", pinyin: "Nǐ huì shuō hànyǔ ma?", dialogue: "<b>A:</b> 你会说汉语吗？<br><b>B:</b> 我会说一点儿。" },
+                quiz: [{ q: "Từ '会' trong '会说汉语' biểu thị điều gì?", options: ["Khả năng/Kỹ năng", "Sự cho phép", "Nguyện vọng", "Bắt buộc"], correct: 0 }],
+                translation: { prompt: "Dịch câu: 'Tôi biết nói tiếng Trung.'", modelAnswer: "我会说汉语。" }
+            },
+            12: {
+                title: "Bài 12: 星期天你在家做什么 (Chủ nhật bạn ở nhà làm gì)",
+                flashcards: [
+                    { word: "错", pinyin: "cuò", meaning: "Sai", type: "Tính từ", example: "不错" },
+                    { word: "对", pinyin: "duì", meaning: "Đúng", type: "Tính từ", example: "对的" },
+                    { word: "天气", pinyin: "tiānqì", meaning: "Thời tiết", type: "Danh từ", example: "今天天气很好。" },
+                    { word: "热", pinyin: "rè", meaning: "Nóng", type: "Tính từ", example: "今天很热。" }
+                ],
+                grammar: [{ title: "Cấu trúc thời gian làm trạng ngữ", content: "Trạng ngữ chỉ thời gian thường đứng trước chủ ngữ hoặc ngay sau chủ ngữ trong câu tiếng Trung." }],
+                listening: { title: "Hội thoại bài 12", pinyin: "Jīntiān tiānqì zěnmeyàng?", dialogue: "<b>A:</b> 今天天气怎么样？<br><b>B:</b> 很好，不冷不热。" },
+                quiz: [{ q: "Từ '天气' có nghĩa là gì?", options: ["Khí hậu", "Thời tiết", "Mùa màng", "Nhiệt độ"], correct: 1 }],
+                translation: { prompt: "Dịch câu: 'Hôm nay thời tiết rất đẹp.'", modelAnswer: "今天天气很好。" }
+            },
+            13: {
+                title: "Bài 13: 他去哪儿工作 (Anh ấy đi đâu làm việc)",
+                flashcards: [
+                    { word: "坐", pinyin: "zuò", meaning: "Ngồi, đi (phương tiện)", type: "Động từ", example: "坐飞机" },
+                    { word: "飞机", pinyin: "fēijī", meaning: "Máy bay", type: "Danh từ", example: "坐飞机" },
+                    { word: "去", pinyin: "qù", meaning: "Đi", type: "Động từ", example: "去医院" },
+                    { word: "医院", pinyin: "yīyuàn", meaning: "Bệnh viện", type: "Danh从", example: "去医院" }
+                ],
+                grammar: [{ title: "Động từ chỉ phương hướng '去'", content: "Cấu trúc biểu thị đi đến đâu đó: 去 + [Địa điểm]. Ví dụ: 去医院 (Đi bệnh viện)." }],
+                listening: { title: "Hội thoại bài 13", pinyin: "Nǐ qù nǎr?", dialogue: "<b>A:</b> 你去哪儿？<br><b>B:</b> 我去医院。" },
+                quiz: [{ q: "Từ '飞机' có nghĩa là gì?", options: ["Tàu hỏa", "Xe buýt", "Máy bay", "Xe đạp"], correct: 2 }],
+                translation: { prompt: "Dịch câu: 'Bạn đi đâu vậy?'", modelAnswer: "你去哪儿？" }
+            },
+            14: {
+                title: "Bài 14: 她买了很多衣服 (Cô ấy mua rất nhiều quần áo)",
+                flashcards: [
+                    { word: "在", pinyin: "zài", meaning: "Ở tại, đang", type: "Giới từ / Động từ", example: "在家" },
+                    { word: "家", pinyin: "jiā", meaning: "Nhà", type: "Danh từ", example: "在家" },
+                    { word: "哪儿", pinyin: "nǎr", meaning: "Ở đâu, đâu", type: "Đại từ", example: "你在哪儿？" },
+                    { word: "工作", pinyin: "gōngzuò", meaning: "Công việc, làm việc", type: "Danh từ / Động từ", example: "努力工作" }
+                ],
+                grammar: [{ title: "Cấu trúc chỉ vị trí với '在'", content: "Chủ ngữ + 在 + [Địa điểm] để diễn tả vị trí đối tượng đang ở hoặc thực hiện hành động." }],
+                listening: { title: "Hội thoại bài 14", pinyin: "Bàba zài nǎr?", dialogue: "<b>A:</b> 爸爸在哪儿？<br><b>B:</b> 爸爸在医院工作。" },
+                quiz: [{ q: "Từ '工作' có thể đóng vai trò từ loại nào?", options: ["Danh từ", "Động từ", "Cả danh từ và động từ", "Tính từ"], correct: 2 }],
+                translation: { prompt: "Dịch câu: 'Bố bạn làm việc ở đâu?'", modelAnswer: "你爸爸在哪儿工作？" }
+            },
+            15: {
+                title: "Bài 15: 他在学校学习汉语 (Anh ấy học tiếng Trung ở trường)",
+                flashcards: [
+                    { word: "时候", pinyin: "shíhou", meaning: "Khi, lúc", type: "Danh từ", example: "什么时候" },
+                    { word: "下雨", pinyin: "xià yǔ", meaning: "Mưa", type: "Động từ", example: "下雨了" },
+                    { word: "爱", pinyin: "ài", meaning: "Yêu, thích", type: "Động từ", example: "我爱你" },
+                    { word: "高兴", pinyin: "gāoxìng", meaning: "Vui vẻ, hạnh phúc", type: "Tính từ", example: "很高兴" }
+                ],
+                grammar: [{ title: "Tổng kết các điểm ngữ pháp nền tảng HSK 1", content: "Ôn tập toàn bộ trật tự câu cơ bản S-V-O, cách dùng từ chỉ thời gian, địa điểm và các trợ từ ngữ khí thường gặp." }],
+                listening: { title: "Hội thoại bài 15", pinyin: "Jīntiān huì xià yǔ ma?", dialogue: "<b>A:</b> 今天会下雨吗？<br><b>B:</b> 不会，天气很好。" },
+                quiz: [{ q: "Từ '下雨' có nghĩa là gì?", options: ["Trời nắng", "Trời mưa", "Có gió", "Có tuyết"], correct: 1 }],
+                translation: { prompt: "Dịch câu: 'Rất vui được gặp bạn.'", modelAnswer: "很高兴认识你。" }
             }
         };
 
-        let currentLevel = 1;
-        let currentLesson = 1;
+        let currentLessonId = 1;
         let currentCardIndex = 0;
         let writer = null;
 
         window.onload = function() {
-            initLessonSelector(currentLevel);
-            loadData(currentLevel, currentLesson);
+            initLessonSelector();
+            loadLessonData(1);
             initHanziWriter("你");
         };
 
-        function initLessonSelector(level) {
+        function initLessonSelector() {
             const select = document.getElementById("lesson-select");
             select.innerHTML = "";
-            const lessons = hskDatabase[level];
-            for (let id in lessons) {
+            for (let id in hsk1Lessons) {
                 let opt = document.createElement("option");
                 opt.value = id;
-                opt.textContent = lessons[id].title;
+                opt.textContent = hsk1Lessons[id].title;
                 select.appendChild(opt);
             }
             select.onchange = function() {
-                currentLesson = this.value;
+                currentLessonId = this.value;
                 currentCardIndex = 0;
-                loadData(currentLevel, currentLesson);
+                loadLessonData(currentLessonId);
             };
         }
 
-        function loadData(level, lessonId) {
-            const data = hskDatabase[level][lessonId];
+        function loadLessonData(id) {
+            const data = hsk1Lessons[id];
             updateFlashcard();
             
+            // Ngữ pháp
             const grammarContainer = document.getElementById("grammar-content");
             grammarContainer.innerHTML = data.grammar.map(g => `
                 <div class="border-l-4 border-indigo-600 bg-indigo-50/50 p-4 rounded-r-xl">
@@ -426,10 +418,12 @@
                 </div>
             `).join('');
 
+            // Luyện nghe
             document.getElementById("listen-title").textContent = data.listening.title;
             document.getElementById("listen-pinyin").textContent = data.listening.pinyin;
             document.getElementById("listen-dialogue").innerHTML = data.listening.dialogue;
 
+            // Quiz
             const quizContainer = document.getElementById("quiz-container");
             quizContainer.innerHTML = data.quiz.map((q, qIdx) => `
                 <div class="bg-slate-50 p-4 rounded-xl border space-y-2">
@@ -446,6 +440,7 @@
             `).join('');
             document.getElementById("quiz-result").textContent = "";
 
+            // Luyện dịch
             document.getElementById("translation-prompt").textContent = data.translation.prompt;
             document.getElementById("user-translation-input").value = "";
             document.getElementById("ai-feedback-box").classList.add("hidden");
@@ -463,7 +458,7 @@
         }
 
         function updateFlashcard() {
-            const cards = hskDatabase[currentLevel][currentLesson].flashcards;
+            const cards = hsk1Lessons[currentLessonId].flashcards;
             const fc = cards[currentCardIndex];
             document.getElementById("fc-word").textContent = fc.word;
             document.getElementById("fc-pinyin").textContent = fc.pinyin;
@@ -479,13 +474,13 @@
         }
 
         function nextCard() {
-            const cards = hskDatabase[currentLevel][currentLesson].flashcards;
+            const cards = hsk1Lessons[currentLessonId].flashcards;
             currentCardIndex = (currentCardIndex + 1) % cards.length;
             updateFlashcard();
         }
 
         function prevCard() {
-            const cards = hskDatabase[currentLevel][currentLesson].flashcards;
+            const cards = hsk1Lessons[currentLessonId].flashcards;
             currentCardIndex = (currentCardIndex - 1 + cards.length) % cards.length;
             updateFlashcard();
         }
@@ -517,12 +512,11 @@
             icon.classList.remove("fa-volume-high");
             icon.classList.add("fa-wave-square", "animate-pulse");
             
-            // Lấy trực tiếp đoạn pinyin mẫu để phát âm chuẩn ngữ điệu tiếng Trung
             const textToSpeech = document.getElementById("listen-pinyin").textContent.split('-')[0].trim();
             if ('speechSynthesis' in window) {
                 let utterance = new SpeechSynthesisUtterance(textToSpeech);
                 utterance.lang = 'zh-CN';
-                utterance.rate = 0.75; // Điều chỉnh tốc độ chậm để rõ ngữ điệu
+                utterance.rate = 0.75;
                 window.speechSynthesis.speak(utterance);
             }
 
@@ -533,7 +527,7 @@
         }
 
         function submitQuiz() {
-            const data = hskDatabase[currentLevel][currentLesson].quiz;
+            const data = hsk1Lessons[currentLessonId].quiz;
             let score = 0;
             data.forEach((q, idx) => {
                 const selected = document.querySelector(`input[name="q${idx}"]:checked`);
@@ -548,7 +542,7 @@
 
         function aiEvaluateTranslation() {
             const userText = document.getElementById("user-translation-input").value.trim();
-            const modelAnswer = hskDatabase[currentLevel][currentLesson].translation.modelAnswer;
+            const modelAnswer = hsk1Lessons[currentLessonId].translation.modelAnswer;
             const feedbackBox = document.getElementById("ai-feedback-box");
             const feedbackText = document.getElementById("ai-feedback-text");
 
