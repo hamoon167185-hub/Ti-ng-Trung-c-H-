@@ -3,599 +3,426 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ha Moon Chinese - Tiếng Trung </title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>HSK 3.0 - Tương Tác Thông Minh</title>
+    <!-- Tailwind CSS cho giao diện hiện đại -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- HanziWriter để xem nét chữ -->
+    <script src="https://cdn.jsdelivr.net/npm/hanzi-writer@3.5/dist/hanzi-writer.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root {
-            --primary: #e11d48;
-            --primary-light: #fff1f2;
-            --primary-dark: #be123c;
-            --text-main: #1f2937;
-            --text-muted: #6b7280;
-            --bg-body: #f8fafc;
-            --bg-card: #ffffff;
-            --border: #e2e8f0;
-            --radius: 16px;
-            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body {
-            font-family: 'Plus Jakarta Sans', 'Noto Sans SC', sans-serif;
-            background-color: var(--bg-body);
-            color: var(--text-main);
-            line-height: 1.6;
-            padding-bottom: 60px;
-        }
-
-        header {
-            background: linear-gradient(135deg, #fff 0%, #fff1f2 100%);
-            border-bottom: 1px solid var(--border);
-            padding: 20px 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 4px rgb(0 0 0 / 0.02);
-        }
-
-        .logo-area { display: flex; align-items: center; gap: 12px; }
-        .logo-icon {
-            width: 48px; height: 48px;
-            background: var(--primary);
-            color: white;
-            border-radius: 12px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 20px; font-weight: 700;
-            box-shadow: 0 4px 12px rgba(225, 29, 72, 0.3);
-        }
-        .logo-title h2 { font-size: 1.25rem; font-weight: 700; color: var(--text-main); }
-        .logo-title p { font-size: 0.85rem; color: var(--text-muted); }
-        .badge-hsk {
-            background: var(--primary-light);
-            color: var(--primary);
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-weight: 600;
-            font-size: 0.85rem;
-            border: 1px solid #fecdd3;
-        }
-
-        .container { max-width: 1200px; margin: 24px auto; padding: 0 20px; }
-
-        .nav-tabs {
-            display: flex;
-            gap: 10px;
-            overflow-x: auto;
-            padding-bottom: 10px;
-            margin-bottom: 24px;
-            scrollbar-width: thin;
-        }
-        .nav-btn {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            padding: 10px 18px;
-            border-radius: 30px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: var(--transition);
-            white-space: nowrap;
-            color: var(--text-muted);
-        }
-        .nav-btn:hover { border-color: var(--primary); color: var(--primary); }
-        .nav-btn.active {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
-            box-shadow: 0 4px 12px rgba(225, 29, 72, 0.25);
-        }
-
-        .lessons-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 20px;
-        }
-
-        .lesson-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 24px;
-            cursor: pointer;
-            transition: var(--transition);
-            box-shadow: var(--shadow);
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-        .lesson-card:hover {
-            transform: translateY(-4px);
-            border-color: var(--primary);
-            box-shadow: 0 10px 25px -5px rgb(0 0 0 / 0.1);
-        }
-        .lesson-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
-        .lesson-tag {
-            background: var(--primary-light);
-            color: var(--primary);
-            padding: 4px 10px;
-            border-radius: 8px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-        }
-        .lesson-num { font-weight: 700; color: var(--text-muted); font-size: 0.85rem; }
-        .lesson-title h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: 4px; color: var(--text-main); }
-        .lesson-title p { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 16px; }
-        .lesson-meta {
-            display: flex;
-            gap: 16px;
-            border-top: 1px solid var(--border);
-            padding-top: 12px;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
-
-        /* Modal nội dung bài học */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(4px);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-        .modal.active { display: flex; }
-        .modal-content {
-            background: var(--bg-card);
-            width: 100%; max-width: 900px;
-            max-height: 90vh;
-            border-radius: var(--radius);
-            display: flex; flex-direction: column;
-            box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
-            animation: modalShow 0.3s ease;
-            overflow: hidden;
-        }
-        @keyframes modalShow {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
-        }
-        .modal-header {
-            padding: 20px 24px;
-            border-bottom: 1px solid var(--border);
-            display: flex; justify-content: space-between; align-items: center;
-            background: #fff;
-        }
-        .modal-close {
-            background: var(--bg-body); border: none; width: 36px; height: 36px;
-            border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            font-size: 18px; cursor: pointer; color: var(--text-muted); transition: var(--transition);
-        }
-        .modal-close:hover { background: var(--primary-light); color: var(--primary); }
-
-        .modal-body { padding: 24px; overflow-y: auto; flex: 1; }
-
-        .section-title {
-            font-size: 1.1rem; font-weight: 700; color: var(--primary);
-            margin: 24px 0 12px 0; display: flex; align-items: center; gap: 8px;
-        }
-        .section-title:first-child { margin-top: 0; }
-
-        .vocab-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 12px;
-        }
-        .vocab-item {
-            background: var(--bg-body);
-            border: 1px solid var(--border);
-            padding: 12px 16px;
-            border-radius: 10px;
-            text-align: center;
-            transition: var(--transition);
-        }
-        .vocab-item:hover { border-color: var(--primary); background: var(--primary-light); }
-        .vocab-hanzi { font-size: 1.5rem; font-weight: 700; color: var(--text-main); margin-bottom: 2px; }
-        .vocab-pinyin { font-size: 0.85rem; color: var(--primary); font-weight: 600; margin-bottom: 4px; }
-        .vocab-meaning { font-size: 0.85rem; color: var(--text-muted); }
-
-        .grammar-box {
-            background: var(--primary-light);
-            border-left: 4px solid var(--primary);
-            padding: 16px; border-radius: 0 10px 10px 0;
-            font-size: 0.95rem; color: var(--text-main);
-        }
-        .grammar-box h3 { color: var(--primary); margin-bottom: 6px; font-size: 1rem; }
-
-        .translate-item {
-            background: var(--bg-body);
-            border: 1px solid var(--border);
-            padding: 12px 16px; border-radius: 10px;
-            margin-bottom: 10px;
-        }
-        .translate-prompt { font-weight: 600; margin-bottom: 6px; color: var(--text-main); }
-        .translate-answer { color: var(--primary); font-size: 0.9rem; font-weight: 500; display: none; }
-        .translate-answer.show { display: block; margin-top: 4px; }
-        .btn-toggle {
-            background: none; border: 1px solid var(--primary); color: var(--primary);
-            padding: 4px 10px; border-radius: 6px; font-size: 0.75rem; font-weight: 600;
-            cursor: pointer; margin-top: 6px; transition: var(--transition);
-        }
-        .btn-toggle:hover { background: var(--primary); color: white; }
+        .perspective-1000 { perspective: 1000px; }
+        .transform-style-3d { transform-style: preserve-3d; }
+        .backface-hidden { backface-visibility: hidden; }
+        .rotate-y-180 { transform: rotateY(180deg); }
     </style>
 </head>
-<body>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col">
 
-    <header>
-        <div class="logo-area">
-            <div class="logo-icon">Hà</div>
-            <div class="logo-title">
-                <h2>Ha Moon Chinese</h2>
-                <p>Tiếng Trung chuẩn HSK 3.0</p>
+    <!-- Header: Thông tin hệ thống, Giáo viên & Nút Zalo liên hệ -->
+    <header class="bg-indigo-600 text-white shadow-md p-4 sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto flex flex-wrap justify-between items-center gap-4">
+            
+            <!-- Tiêu đề hệ thống tổng hợp HSK 1-9 (Form 3.0) -->
+            <div class="flex items-center gap-3">
+                <div class="bg-indigo-700 p-2.5 rounded-xl text-white shadow-inner">
+                    <i class="fa-solid fa-graduation-cap text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-base sm:text-lg font-bold">Ôn Tập HSK (Form 3.0)</h1>
+                    <p class="text-xs text-indigo-200">Hệ thống tổng hợp chuẩn kiến thức các cấp độ</p>
+                </div>
+            </div>
+
+            <!-- Khu vực thông tin giáo viên & Link Zalo (Tự sửa thông tin tại đây) -->
+            <div class="flex items-center gap-4 bg-indigo-700/50 px-4 py-2 rounded-xl border border-indigo-500/40">
+                <div class="text-right hidden sm:block">
+                    <p class="text-[11px] text-indigo-200 uppercase tracking-wider">Giảng viên phụ trách</p>
+                    <p class="text-sm font-semibold text-white">[cô Hà]</p>
+                </div>
+                <!-- Thay đổi link zalo.me/số_điện_thoại của bạn -->
+                <a href="https://zalo.me/0962486745" target="_blank" class="bg-blue-500 hover:bg-blue-600 text-white px-3.5 py-1.5 rounded-lg text-sm font-medium flex items-center gap-2 shadow-sm transition">
+                    <i class="fa-solid fa-comments"></i> Liên hệ Zalo
+                </a>
+            </div>
+
+            <!-- Bộ lọc chọn Cấp độ HSK & Bài học -->
+            <div class="flex items-center gap-2 w-full sm:w-auto">
+                <select id="hsk-level-select" class="bg-indigo-700 text-white border border-indigo-400 rounded px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-white text-sm font-medium">
+                    <option value="1">HSK Cấp độ 1</option>
+                    <option value="2" disabled>HSK Cấp độ 2 (Sắp ra mắt)</option>
+                    <!-- Các cấp độ từ 3 đến 9 sẽ được bổ sung code ở đây sau -->
+                </select>
+                <select id="lesson-select" class="bg-indigo-700 text-white border border-indigo-400 rounded px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-white text-sm font-medium flex-1 sm:flex-none">
+                    <!-- Dữ liệu bài học nạp động qua JS -->
+                </select>
             </div>
         </div>
-        <div class="badge-hsk">HSK 1 Standard</div>
     </header>
 
-    <div class="container">
-        <div class="nav-tabs" id="level-nav">
-            <button class="nav-btn active" onclick="filterLevel('all')">Tất cả bài học</button>
-            <button class="nav-btn" onclick="filterLevel('HSK 1')">HSK 1 (150 Từ vựng)</button>
-        </div>
+    <!-- Main Container -->
+    <main class="flex-grow max-w-6xl w-full mx-auto p-4 sm:p-6 grid grid-cols-1 lg:grid-cols-4 gap-6">
+        
+        <!-- Sidebar Navigation các phần học -->
+        <aside class="lg:col-span-1 bg-white p-4 rounded-xl shadow-sm border border-slate-100 h-fit space-y-2">
+            <h2 class="font-semibold text-slate-400 uppercase text-xs tracking-wider mb-3">Nội dung ôn tập</h2>
+            <button onclick="switchTab('flashcard')" class="tab-btn w-full text-left px-3 py-2 rounded-lg font-medium transition active-tab bg-indigo-50 text-indigo-600 flex items-center gap-3">
+                <i class="fa-solid fa-clone w-5 text-center"></i> Flashcard Từ Vựng
+            </button>
+            <button onclick="switchTab('hanzi')" class="tab-btn w-full text-left px-3 py-2 rounded-lg font-medium transition text-slate-600 hover:bg-slate-50 flex items-center gap-3">
+                <i class="fa-solid fa-pen-brush w-5 text-center"></i> Xem Nét Chữ (Hanzi)
+            </button>
+            <button onclick="switchTab('grammar')" class="tab-btn w-full text-left px-3 py-2 rounded-lg font-medium transition text-slate-600 hover:bg-slate-50 flex items-center gap-3">
+                <i class="fa-solid fa-book-open w-5 text-center"></i> Ngữ Pháp 3.0
+            </button>
+            <button onclick="switchTab('listening')" class="tab-btn w-full text-left px-3 py-2 rounded-lg font-medium transition text-slate-600 hover:bg-slate-50 flex items-center gap-3">
+                <i class="fa-solid fa-headphones w-5 text-center"></i> Luyện Nghe & Audio
+            </button>
+            <button onclick="switchTab('quiz')" class="tab-btn w-full text-left px-3 py-2 rounded-lg font-medium transition text-slate-600 hover:bg-slate-50 flex items-center gap-3">
+                <i class="fa-solid fa-list-check w-5 text-center"></i> Trắc Nghiệm HSK
+            </button>
+            <button onclick="switchTab('translation')" class="tab-btn w-full text-left px-3 py-2 rounded-lg font-medium transition text-slate-600 hover:bg-slate-50 flex items-center gap-3">
+                <i class="fa-solid fa-language w-5 text-center"></i> Luyện Dịch AI Chấm
+            </button>
+        </aside>
 
-        <div class="lessons-grid" id="lessonsGrid">
-            <!-- Render bằng JavaScript -->
-        </div>
-    </div>
-
-    <!-- Modal Chi Tiết Bài Học -->
-    <div class="modal" id="lessonModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div>
-                    <span id="modalTag" class="lesson-tag">HSK 1</span>
-                    <h2 id="modalTitle" style="font-size: 1.25rem; margin-top: 4px;">Tên bài học</h2>
+        <!-- Content Area -->
+        <section class="lg:col-span-3 bg-white p-6 rounded-xl shadow-sm border border-slate-100">
+            
+            <!-- 1. FLASHCARD -->
+            <div id="tab-flashcard" class="tab-content space-y-6">
+                <h2 class="text-2xl font-bold text-slate-800 border-b pb-3">Flashcard Từ Vựng</h2>
+                <div class="flex justify-center items-center py-8">
+                    <div class="perspective-1000 w-full max-w-md h-72 cursor-pointer" onclick="toggleCard(this)">
+                        <div class="relative w-full h-full duration-500 transform-style-3d shadow-xl rounded-2xl" id="card-inner">
+                            <!-- Mặt trước -->
+                            <div class="absolute inset-0 backface-hidden bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl flex flex-col justify-center items-center text-white p-6">
+                                <span id="fc-word" class="text-6xl font-bold mb-4">你好</span>
+                                <span id="fc-pinyin" class="text-xl opacity-90">nǐ hǎo</span>
+                                <span class="text-xs mt-6 opacity-70">(Nhấn để lật xem nghĩa)</span>
+                            </div>
+                            <!-- Mặt sau -->
+                            <div class="absolute inset-0 backface-hidden rotate-y-180 bg-white border-2 border-indigo-100 rounded-2xl flex flex-col justify-center items-center p-6 text-slate-800">
+                                <h3 id="fc-meaning" class="text-3xl font-bold text-indigo-600 mb-2">Xin chào</h3>
+                                <p id="fc-type" class="text-sm bg-indigo-50 text-indigo-700 px-3 py-1 rounded-full font-medium mb-4">Thán từ</p>
+                                <p id="fc-example" class="text-sm text-center text-slate-600 italic">Ví dụ: 你好，老师！</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <button class="modal-close" onclick="closeModal()">✕</button>
+                <div class="flex justify-center gap-4">
+                    <button onclick="prevCard()" class="px-4 py-2 bg-slate-200 hover:bg-slate-300 font-medium rounded-lg transition"><i class="fa-solid fa-arrow-left"></i> Từ trước</button>
+                    <button onclick="nextCard()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-lg transition">Từ tiếp <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
             </div>
-            <div class="modal-body" id="modalBody">
-                <!-- Nội dung chi tiết bài học -->
+
+            <!-- 2. HANZI WRITER -->
+            <div id="tab-hanzi" class="tab-content hidden space-y-6">
+                <h2 class="text-2xl font-bold text-slate-800 border-b pb-3">Thực Hành Xem Nét Chữ & Viết</h2>
+                <div class="flex flex-col sm:flex-row gap-6 items-center justify-center">
+                    <div id="character-target-div" class="w-48 h-48 border-2 border-slate-200 rounded-xl shadow-inner flex items-center justify-center bg-white"></div>
+                    <div class="space-y-3 w-full sm:w-auto">
+                        <label class="block text-sm font-medium text-slate-700">Chọn hoặc nhập chữ Hán:</label>
+                        <input type="text" id="hanzi-input" value="你" maxlength="1" class="border border-slate-300 rounded-lg px-4 py-2 w-full text-center text-xl font-bold focus:ring-2 focus:ring-indigo-500" oninput="updateHanzi(this.value)">
+                        <div class="flex gap-2">
+                            <button onclick="writer.animateCharacter()" class="flex-1 bg-indigo-600 text-white px-3 py-2 rounded-lg font-medium hover:bg-indigo-700 text-sm"><i class="fa-solid fa-play"></i> Xem viết mẫu</button>
+                            <button onclick="writer.quiz()" class="flex-1 bg-emerald-600 text-white px-3 py-2 rounded-lg font-medium hover:bg-emerald-700 text-sm"><i class="fa-solid fa-pencil"></i> Tập viết</button>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
 
-    <script>
-        const lessonsData = [
-            {
-                id: 1, level: "HSK 1", titleNum: "第1课", title: "基础代名词与问候", sub: "Đại từ cơ bản và Chào hỏi",
-                vocab: [
-                    { hanzi: "我", pinyin: "wǒ", meaning: "tôi, ta, mình" },
-                    { hanzi: "你", pinyin: "nǐ", meaning: "anh, chị, bạn..." },
-                    { hanzi: "他", pinyin: "tā", meaning: "anh ấy, ông ấy..." },
-                    { hanzi: "她", pinyin: "tā", meaning: "cô ấy, bà ấy..." },
-                    { hanzi: "我们", pinyin: "wǒmen", meaning: "chúng ta" },
-                    { hanzi: "好", pinyin: "hǎo", meaning: "khỏe, tốt..." },
-                    { hanzi: "再见", pinyin: "zàijiàn", meaning: "tạm biệt" },
-                    { hanzi: "谢谢", pinyin: "xièxie", meaning: "cảm ơn" },
-                    { hanzi: "不客气", pinyin: "búkèqi", meaning: "đừng khách sáo" },
-                    { hanzi: "对不起", pinyin: "duìbùqi", meaning: "xin lỗi" },
-                    { hanzi: "没关系", pinyin: "méi guānxi", meaning: "không sao đâu" },
-                    { hanzi: "爱", pinyin: "ài", meaning: "yêu, thích" }
-                ],
-                grammar: `<h3>1. Đại từ nhân xưng cơ bản</h3><p>我 (tôi), 你 (bạn), 他/她 (anh ấy/cô ấy). Thêm 们 (men) đằng sau để chuyển thành số nhiều (ví dụ: 我们 - chúng ta).</p>`,
-                translate: [
-                    { prompt: "Dịch sang tiếng Việt: 你好！", answer: "Xin chào!" },
-                    { prompt: "Dịch sang tiếng Việt: 谢谢你。", answer: "Cảm ơn bạn." }
-                ]
-            },
-            {
-                id: 2, level: "HSK 1", titleNum: "第2课", title: "数字与 1 到 10", sub: "Các số đếm từ 1 đến 10",
-                vocab: [
-                    { hanzi: "一", pinyin: "yī", meaning: "số 1" },
-                    { hanzi: "二", pinyin: "èr", meaning: "số 2" },
-                    { hanzi: "三", pinyin: "sān", meaning: "số 3" },
-                    { hanzi: "四", pinyin: "sì", meaning: "số 4" },
-                    { hanzi: "五", pinyin: "wǔ", meaning: "số 5" },
-                    { hanzi: "六", pinyin: "liù", meaning: "số 6" },
-                    { hanzi: "七", pinyin: "qī", meaning: "số 7" },
-                    { hanzi: "八", pinyin: "bā", meaning: "số 8" },
-                    { hanzi: "九", pinyin: "jiǔ", meaning: "số 9" },
-                    { hanzi: "十", pinyin: "shí", meaning: "số 10" },
-                    { hanzi: "几", pinyin: "jǐ", meaning: "mấy" },
-                    { hanzi: "多少", pinyin: "duōshao", meaning: "bao nhiêu" }
-                ],
-                grammar: `<h3>1. Cách dùng 几 và 多少</h3><p><strong>几</strong> dùng để hỏi số lượng nhỏ (dưới 10). <strong>多少</strong> dùng để hỏi số lượng lớn hơn hoặc không giới hạn.</p>`,
-                translate: [
-                    { prompt: "Dịch sang tiếng Việt: 你几岁？", answer: "Bạn mấy tuổi?" }
-                ]
-            },
-            {
-                id: 3, level: "HSK 1", titleNum: "第3课", title: "家庭与人物", sub: "Gia đình và con người",
-                vocab: [
-                    { hanzi: "爸爸", pinyin: "baba", meaning: "cha, bố" },
-                    { hanzi: "妈妈", pinyin: "māma", meaning: "mẹ" },
-                    { hanzi: "儿子", pinyin: "érzi", meaning: "con trai" },
-                    { hanzi: "女儿", pinyin: "nǚ'ér", meaning: "con gái" },
-                    { hanzi: "老师", pinyin: "lǎoshī", meaning: "thầy/cô giáo" },
-                    { hanzi: "学生", pinyin: "xuéshēng", meaning: "học sinh" },
-                    { hanzi: "同学", pinyin: "tóngxué", meaning: "bạn cùng lớp" },
-                    { hanzi: "朋友", pinyin: "péngyou", meaning: "bạn" },
-                    { hanzi: "医生", pinyin: "yīshēng", meaning: "bác sĩ" },
-                    { hanzi: "先生", pinyin: "xiānshēng", meaning: "ông, ngài" },
-                    { hanzi: "小姐", pinyin: "xiǎojiě", meaning: "cô" },
-                    { hanzi: "人", pinyin: "rén", meaning: "người" }
-                ],
-                grammar: `<h3>1. Danh từ chỉ người</h3><p>Thường đứng độc lập hoặc kết hợp với danh từ khác để chỉ nghề nghiệp, quan hệ xã hội.</p>`,
-                translate: [
-                    { prompt: "Dịch sang tiếng Việt: 他是我的老师。", answer: "Anh ấy là thầy giáo của tôi." }
-                ]
-            },
-            {
-                id: 4, level: "HSK 1", titleNum: "第4课", title: "日常饮食与食物", sub: "Đồ ăn và thức uống",
-                vocab: [
-                    { hanzi: "水", pinyin: "shuǐ", meaning: "nước" },
-                    { hanzi: "茶", pinyin: "chá", meaning: "trà" },
-                    { hanzi: "米饭", pinyin: "mǐfàn", meaning: "cơm" },
-                    { hanzi: "菜", pinyin: "cài", meaning: "món ăn, thức ăn" },
-                    { hanzi: "苹果", pinyin: "píngguo", meaning: "táo" },
-                    { hanzi: "水果", pinyin: "shuǐguǒ", meaning: "trái cây" },
-                    { hanzi: "吃", pinyin: "chī", meaning: "ăn" },
-                    { hanzi: "喝", pinyin: "hē", meaning: "uống" },
-                    { hanzi: "买", pinyin: "mǎi", meaning: "mua" },
-                    { hanzi: "饭店", pinyin: "fàndiàn", meaning: "khách sạn, nhà hàng" }
-                ],
-                grammar: `<h3>1. Cấu trúc câu có động từ 吃 / 喝</h3><p>Chủ ngữ + Động từ + Tân ngữ. Ví dụ: 我喝水 (Tôi uống nước).</p>`,
-                translate: [
-                    { prompt: "Dịch sang tiếng Việt: 我想吃米饭。", answer: "Tôi muốn ăn cơm." }
-                ]
-            },
-            {
-                id: 5, level: "HSK 1", titleNum: "第5课", title: "时间和日期", sub: "Thời gian và Ngày tháng",
-                vocab: [
-                    { hanzi: "今天", pinyin: "jīntiān", meaning: "hôm nay" },
-                    { hanzi: "明天", pinyin: "míngtiān", meaning: "ngày mai" },
-                    { hanzi: "昨天", pinyin: "zuótiān", meaning: "hôm qua" },
-                    { hanzi: "年", pinyin: "nián", meaning: "năm" },
-                    { hanzi: "月", pinyin: "yuè", meaning: "tháng" },
-                    { hanzi: "号", pinyin: "hào", meaning: "ngày" },
-                    { hanzi: "星期", pinyin: "xīngqī", meaning: "tuần, thứ" },
-                    { hanzi: "点", pinyin: "diǎn", meaning: "giờ" },
-                    { hanzi: "分钟", pinyin: "fēnzhōng", meaning: "phút" },
-                    { hanzi: "时候", pinyin: "shíhòu", meaning: "lúc, khi" },
-                    { hanzi: "现在", pinyin: "xiànzài", meaning: "bây giờ, hiện tại" }
-                ],
-                grammar: `<h3>1. Biểu thị thời gian trong câu</h3><p>Trạng ngữ chỉ thời gian thường đứng trước chủ ngữ hoặc sau chủ ngữ.</p>`,
-                translate: [
-                    { prompt: "Dịch sang tiếng Việt: 今天几月几号？", answer: "Hôm nay là ngày mấy tháng mấy?" }
-                ]
-            },
-            {
-                id: 6, level: "HSK 1", titleNum: "第6课", title: "常用动物 & Đồ vật", sub: "Đồ vật quanh ta và hành động",
-                vocab: [
-                    { hanzi: "电脑", pinyin: "diànnǎo", meaning: "máy vi tính" },
-                    { hanzi: "电视", pinyin: "diànshì", meaning: "tivi" },
-                    { hanzi: "电影", pinyin: "diànyǐng", meaning: "phim" },
-                    { hanzi: "书", pinyin: "shū", meaning: "sách" },
-                    { hanzi: "衣服", pinyin: "yīfu", meaning: "quần áo" },
-                    { hanzi: "杯子", pinyin: "bēizi", meaning: "ly, tách" },
-                    { hanzi: "桌子", pinyin: "zhuōzi", meaning: "bàn" },
-                    { hanzi: "椅子", pinyin: "yǐzi", meaning: "ghế dựa" },
-                    { hanzi: "猫", pinyin: "māo", meaning: "mèo" },
-                    { hanzi: "狗", pinyin: "gǒu", meaning: "chó" },
-                    { hanzi: "字", pinyin: "zì", meaning: "chữ" }
-                ],
-                grammar: `<h3>1. Danh từ chỉ vật</h3><p>Dùng để gọi tên các đồ vật quen thuộc trong đời sống hằng ngày.</p>`,
-                translate: [
-                    { prompt: "Dịch sang tiếng Việt: 这是一本书。", answer: "Đây là một cuốn sách." }
-                ]
-            },
-            {
-                id: 7, level: "HSK 1", titleNum: "第7课", title: "Place & Direction", sub: "Địa điểm và phương hướng",
-                vocab: [
-                    { hanzi: "家", pinyin: "jiā", meaning: "nhà" },
-                    { hanzi: "学校", pinyin: "xuéxiào", meaning: "trường học" },
-                    { hanzi: "医院", pinyin: "yīyuàn", meaning: "bệnh viện" },
-                    { hanzi: "商店", pinyin: "shāngdiàn", meaning: "cửa hàng" },
-                    { hanzi: "中国", pinyin: "zhōngguó", meaning: "Trung Quốc" },
-                    { hanzi: "北京", pinyin: "běijīng", meaning: "Bắc Kinh" },
-                    { hanzi: "上", pinyin: "shàng", meaning: "trên, phía trên" },
-                    { hanzi: "下", pinyin: "xià", meaning: "dưới, phía dưới" },
-                    { hanzi: "里", pinyin: "lǐ", meaning: "trong, bên trong" },
-                    { hanzi: "前面", pinyin: "qiánmiàn", meaning: "phía trước" },
-                    { hanzi: "后面", pinyin: "hòumiàn", meaning: "phía sau" }
-                ],
-                grammar: `<h3>1. Danh từ chỉ phương vị</h3><p>Thường đặt sau danh từ chỉ vật/địa điểm để chỉ vị trí.</p>`,
-                translate: [
-                    { prompt: "Dịch sang tiếng Việt: 我在学校。", answer: "Tôi ở trường học." }
-                ]
-            },
-            {
-                id: 8, level: "HSK 1", titleNum: "第8课", title: "Hành động & Di chuyển", sub: "Các hoạt động thường ngày",
-                vocab: [
-                    { hanzi: "去", pinyin: "qù", meaning: "đi, đi đến" },
-                    { hanzi: "来", pinyin: "lái", meaning: "đến, tới" },
-                    { hanzi: "回", pinyin: "huí", meaning: "về, trở về" },
-                    { hanzi: "坐", pinyin: "zuò", meaning: "ngồi" },
-                    { hanzi: "做", pinyin: "zuò", meaning: "làm, nấu" },
-                    { hanzi: "看", pinyin: "kàn", meaning: "nhìn, xem" },
-                    { hanzi: "听", pinyin: "tīng", meaning: "nghe" },
-                    { hanzi: "说", pinyin: "shuō", meaning: "nói" },
-                    { hanzi: "读", pinyin: "dú", meaning: "đọc" },
-                    { hanzi: "写", pinyin: "xiě", meaning: "viết" },
-                    { hanzi: "开", pinyin: "kāi", meaning: "lái, mở" },
-                    { hanzi: "住", pinyin: "zhù", meaning: "ở" }
-                ],
-                grammar: `<h3>1. Động từ hành động</h3><p>Các động từ chỉ hành động cơ bản ghép với tân ngữ tạo thành câu đơn giản.</p>`,
-                translate: [
-                    { prompt: "Dịch sang tiếng Việt: 我去北京。", answer: "Tôi đi Bắc Kinh." }
-                ]
-            },
-            {
-                id: 9, level: "HSK 1", titleNum: "第9课", title: "Tính từ & Cảm xúc", sub: "Mô tả tính chất và trạng thái",
-                vocab: [
-                    { hanzi: "大", pinyin: "dà", meaning: "lớn" },
-                    { hanzi: "小", pinyin: "xiǎo", meaning: "nhỏ, bé" },
-                    { hanzi: "多", pinyin: "duō", meaning: "nhiều" },
-                    { hanzi: "少", pinyin: "shǎo", meaning: "ít" },
-                    { hanzi: "冷", pinyin: "lěng", meaning: "lạnh" },
-                    { hanzi: "热", pinyin: "rè", meaning: "nóng" },
-                    { hanzi: "高兴", pinyin: "gāoxìng", meaning: "vui, phấn khởi" },
-                    { hanzi: "漂亮", pinyin: "piàoliang", meaning: "đẹp" },
-                    { hanzi: "好", pinyin: "hǎo", meaning: "tốt, khỏe" }
-                ],
-                grammar: `<h3>1. Câu tính từ vị ngữ</h3><p>Tính từ làm vị ngữ, thường đi kèm phó từ mức độ 很 (rất).</p>`,
-                translate: [
-                    { prompt: "Dịch sang tiếng Việt: 今天很热。", answer: "Hôm nay rất nóng." }
-                ]
-            },
-            {
-                id: 10, level: "HSK 1", titleNum: "第10课", title: "Trợ từ, Phó từ & Động từ năng nguyện", sub: "Ngữ pháp cốt lõi HSK 1",
-                vocab: [
-                    { hanzi: "的", pinyin: "de", meaning: "trợ từ sở hữu/định ngữ" },
-                    { hanzi: "了", pinyin: "le", meaning: "trợ từ ngữ khí" },
-                    { hanzi: "吗", pinyin: "ma", meaning: "trợ từ nghi vấn" },
-                    { hanzi: "呢", pinyin: "ne", meaning: "trợ từ hỏi ngược lại" },
-                    { hanzi: "很", pinyin: "hěn", meaning: "rất" },
-                    { hanzi: "太", pinyin: "tài", meaning: "quá, lắm" },
-                    { hanzi: "都", pinyin: "dōu", meaning: "đều" },
-                    { hanzi: "不", pinyin: "bù", meaning: "không" },
-                    { hanzi: "没有", pinyin: "méiyǒu", meaning: "không có" },
-                    { hanzi: "能", pinyin: "néng", meaning: "có thể" },
-                    { hanzi: "会", pinyin: "huì", meaning: "biết" },
-                    { hanzi: "想", pinyin: "xiǎng", meaning: "muốn, nhớ" }
-                ],
-                grammar: `<h3>1. Câu hỏi với 吗</h3><p>Thêm 吗 vào cuối câu trần thuật để biến thành câu hỏi Yes/No.</p>`,
-                translate: [
-                    { prompt: "Dịch sang tiếng Việt: 你会说汉语吗？", answer: "Bạn có biết nói tiếng Trung không?" }
-                ]
-            },
-            {
-                id: 11, level: "HSK 1", titleNum: "第11课", title: "Giao tiếp tổng hợp", sub: "Giao tiếp mở rộng",
-                vocab: [
-                    { hanzi: "汉语", pinyin: "hànyǔ", meaning: "tiếng Trung Quốc" },
-                    { hanzi: "名字", pinyin: "míngzi", meaning: "tên" },
-                    { hanzi: "岁", pinyin: "suì", meaning: "tuổi" },
-                    { hanzi: "天气", pinyin: "tiānqì", meaning: "thời tiết" },
-                    { hanzi: "飞机", pinyin: "fēijī", meaning: "máy bay" },
-                    { hanzi: "出租车", pinyin: "chūzūchē", meaning: "taxi" },
-                    { hanzi: "电话", pinyin: "diànhuà", meaning: "điện thoại" },
-                    { hanzi: "喂", pinyin: "wèi", meaning: "a lô, này" },
-                    { hanzi: "工作", pinyin: "gōngzuò", meaning: "làm việc" },
-                    { hanzi: "学习", pinyin: "xuéxí", meaning: "học tập" },
-                    { hanzi: "认识", pinyin: "rènshi", meaning: "quen, biết" },
-                    { hanzi: "看见", pinyin: "kànjiàn", meaning: "nhìn thấy" }
-                ],
-                grammar: `<h3>1. Cấu trúc chào hỏi</h3><p>Dùng để làm quen và giao tiếp các chủ đề thông dụng.</p>`,
-                translate: [
-                    { prompt: "Dịch sang tiếng Việt: 认识你很高兴。", answer: "Rất vui được làm quen với bạn." }
-                ]
-            }
-        ];
+            <!-- 3. NGỮ PHÁP 3.0 -->
+            <div id="tab-grammar" class="tab-content hidden space-y-6">
+                <h2 class="text-2xl font-bold text-slate-800 border-b pb-3">Điểm Ngữ Pháp HSK 3.0</h2>
+                <div id="grammar-content" class="space-y-4"></div>
+            </div>
 
-        function renderLessons(filter = 'all') {
-            const grid = document.getElementById('lessonsGrid');
-            grid.innerHTML = '';
-            
-            const filtered = filter === 'all' ? lessonsData : lessonsData.filter(l => l.level === filter);
-            
-            filtered.forEach(lesson => {
-                const card = document.createElement('div');
-                card.className = 'lesson-card';
-                card.onclick = () => openModal(lesson.id);
-                card.innerHTML = `
+            <!-- 4. LUYỆN NGHE & AUDIO -->
+            <div id="tab-listening" class="tab-content hidden space-y-6">
+                <h2 class="text-2xl font-bold text-slate-800 border-b pb-3">Luyện Nghe & Phát Âm Chuẩn</h2>
+                <div class="bg-indigo-50 border border-indigo-100 p-4 rounded-xl flex items-center justify-between">
                     <div>
-                        <div class="lesson-header">
-                            <span class="lesson-tag">${lesson.level}</span>
-                            <span class="lesson-num">${lesson.titleNum}</span>
-                        </div>
-                        <div class="lesson-title">
-                            <h3>${lesson.title}</h3>
-                            <p>${lesson.sub}</p>
-                        </div>
+                        <h3 id="listen-title" class="font-bold text-indigo-950">Đang tải...</h3>
+                        <p id="listen-pinyin" class="text-sm text-indigo-700 italic mt-1"></p>
                     </div>
-                    <div class="lesson-meta">
-                        <span>📖 ${lesson.vocab.length} từ vựng</span>
-                        <span>✍️ ${lesson.translate.length} câu dịch</span>
+                    <button onclick="playAudioSimulation()" class="bg-indigo-600 hover:bg-indigo-700 text-white w-12 h-12 rounded-full flex items-center justify-center shadow-md transition flex-shrink-0">
+                        <i class="fa-solid fa-volume-high text-lg" id="audio-icon"></i>
+                    </button>
+                </div>
+                <div class="border rounded-xl p-4 bg-white space-y-2">
+                    <h4 class="font-semibold text-slate-700">Nội dung hội thoại mẫu:</h4>
+                    <p id="listen-dialogue" class="text-slate-600 leading-relaxed"></p>
+                </div>
+            </div>
+
+            <!-- 5. TRẮC NGHIỆM -->
+            <div id="tab-quiz" class="tab-content hidden space-y-6">
+                <h2 class="text-2xl font-bold text-slate-800 border-b pb-3">Trắc Nghiệm Kiến Thức HSK</h2>
+                <div id="quiz-container" class="space-y-4"></div>
+                <button onclick="submitQuiz()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-lg font-medium transition">Nộp bài kiểm tra</button>
+                <div id="quiz-result" class="font-semibold text-lg"></div>
+            </div>
+
+            <!-- 6. LUYỆN DỊCH AI CHẤM -->
+            <div id="tab-translation" class="tab-content hidden space-y-6">
+                <h2 class="text-2xl font-bold text-slate-800 border-b pb-3">Luyện Dịch Việt - Trung (AI Chấm)</h2>
+                <div class="space-y-4">
+                    <div class="bg-slate-50 border p-4 rounded-xl">
+                        <span class="text-xs font-bold uppercase tracking-wider text-indigo-600">Nhiệm vụ dịch câu:</span>
+                        <p id="translation-prompt" class="text-lg font-semibold text-slate-800 mt-1"></p>
                     </div>
-                `;
-                grid.appendChild(card);
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1">Nhập câu dịch của bạn:</label>
+                        <textarea id="user-translation-input" rows="3" class="w-full border border-slate-300 rounded-lg p-3 focus:ring-2 focus:ring-indigo-500 focus:outline-none" placeholder="Nhập câu trả lời bằng chữ Hán..."></textarea>
+                    </div>
+                    <button onclick="aiEvaluateTranslation()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2.5 rounded-lg font-medium transition shadow-sm">
+                        <i class="fa-solid fa-robot mr-2"></i> Gửi AI Chấm & Gợi Ý Mượt Mà
+                    </button>
+                    <div id="ai-feedback-box" class="hidden border rounded-xl p-4 bg-emerald-50 border-emerald-200 space-y-2">
+                        <h3 class="font-bold text-emerald-900 flex items-center gap-2"><i class="fa-solid fa-circle-check"></i> Kết Quả Đánh Giá Từ AI:</h3>
+                        <p id="ai-feedback-text" class="text-emerald-800 text-sm leading-relaxed"></p>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <!-- JavaScript Xử Lý Toàn Bộ Dữ Liệu -->
+    <script>
+        // Cấu trúc dữ liệu tổng hợp theo cấp độ HSK (Hiện tại hoàn thiện HSK 1, sau này thêm HSK 2-9 vào đây)
+        const hskDatabase = {
+            1: {
+                1: {
+                    title: "Bài 1: 你好！ (Xin chào!)",
+                    flashcards: [
+                        { word: "你好", pinyin: "nǐ hǎo", meaning: "Xin chào", type: "Thán từ", example: "你好，老师！" },
+                        { word: "老师", pinyin: "lǎoshī", meaning: "Thầy/Cô giáo", type: "Danh từ", example: "王老师，你好！" },
+                        { word: "大家", pinyin: "dàjiā", meaning: "Mọi người", type: "Đại từ", example: "大家好！" },
+                        { word: "谢谢", pinyin: "xièxie", meaning: "Cảm ơn", type: "Động từ", example: "谢谢你！" }
+                    ],
+                    grammar: [
+                        { title: "Cách chào hỏi cơ bản", content: "Sử dụng '您' (nín) để xưng hô kính trọng với người lớn tuổi hoặc thầy cô. Sử dụng '你们' cho số nhiều." }
+                    ],
+                    listening: {
+                        title: "Bài hội thoại 1: Chào hỏi giáo viên",
+                        pinyin: "Nǐ hǎo, lǎoshī! - Nǐ hǎo!",
+                        dialogue: "<b>Học viên:</b> 你好，老师！<br><b>Giáo viên:</b> 你好！"
+                    },
+                    quiz: [
+                        { q: "Từ '老师' có nghĩa là gì?", options: ["Học sinh", "Thầy/Cô giáo", "Bác sĩ", "Bạn học"], correct: 1 },
+                        { q: "Khi gặp người lớn tuổi, ta dùng đại từ nào thể hiện sự kính trọng?", options: ["你", "他", "您", "我"], correct: 2 }
+                    ],
+                    translation: {
+                        prompt: "Dịch câu sau sang tiếng Trung: 'Xin chào cô giáo!'",
+                        modelAnswer: "老师，你好！"
+                    }
+                },
+                2: {
+                    title: "Bài 2: 你叫什么名字？ (Bạn tên là gì?)",
+                    flashcards: [
+                        { word: "名字", pinyin: "míngzi", meaning: "Tên", type: "Danh từ", example: "你叫什么名字？" },
+                        { word: "叫", pinyin: "jiào", meaning: "Tên là / Gọi là", type: "Động từ", example: "我叫李文。" },
+                        { word: "对不起", pinyin: "duìbuqi", meaning: "Xin lỗi", type: "Động từ", example: "对不起！- 没关系。" },
+                        { word: "高兴", pinyin: "gāoxìng", meaning: "Vui vẻ", type: "Tính từ", example: "很高兴认识你。" }
+                    ],
+                    grammar: [
+                        { title: "Trật tự từ cơ bản trong câu", content: "Chủ ngữ + Vị ngữ + Tân ngữ (S + V + O). Ví dụ: 我(S) 叫(V) 李文(O)." }
+                    ],
+                    listening: {
+                        title: "Bài hội thoại: Giới thiệu tên",
+                        pinyin: "Qǐngwèn, nǐ jiào shénme míngzi?",
+                        dialogue: "<b>Học viên:</b> 请问，你叫什么名字？<br><b>Giáo viên:</b> 我叫王芳。"
+                    },
+                    quiz: [
+                        { q: "Trật tự câu cơ bản trong tiếng Trung là gì?", options: ["S + O + V", "S + V + O", "V + S + O", "O + V + S"], correct: 1 },
+                        { q: "Đáp lại '对不起' (Xin lỗi), ta thường dùng gì?", options: ["谢谢", "没关系", "再见", "你好"], correct: 1 }
+                    ],
+                    translation: {
+                        prompt: "Dịch câu sau sang tiếng Trung: 'Xin hỏi, bạn tên là gì?'",
+                        modelAnswer: "请问，你叫什么名字？"
+                    }
+                }
+            }
+            // Sau này khi làm HSK 2, bạn chỉ cần thêm: 2: { 1: { ... }, 2: { ... } } vào đây.
+        };
+
+        let currentLevel = 1;
+        let currentLesson = 1;
+        let currentCardIndex = 0;
+        let writer = null;
+
+        window.onload = function() {
+            initLessonSelector(currentLevel);
+            loadData(currentLevel, currentLesson);
+            initHanziWriter("你");
+        };
+
+        function initLessonSelector(level) {
+            const select = document.getElementById("lesson-select");
+            select.innerHTML = "";
+            const lessons = hskDatabase[level];
+            for (let id in lessons) {
+                let opt = document.createElement("option");
+                opt.value = id;
+                opt.textContent = lessons[id].title;
+                select.appendChild(opt);
+            }
+            select.onchange = function() {
+                currentLesson = this.value;
+                currentCardIndex = 0;
+                loadData(currentLevel, currentLesson);
+            };
+        }
+
+        function loadData(level, lessonId) {
+            const data = hskDatabase[level][lessonId];
+            updateFlashcard();
+            
+            const grammarContainer = document.getElementById("grammar-content");
+            grammarContainer.innerHTML = data.grammar.map(g => `
+                <div class="border-l-4 border-indigo-600 bg-indigo-50/50 p-4 rounded-r-xl">
+                    <h3 class="font-bold text-indigo-900">${g.title}</h3>
+                    <p class="text-slate-700 mt-1">${g.content}</p>
+                </div>
+            `).join('');
+
+            document.getElementById("listen-title").textContent = data.listening.title;
+            document.getElementById("listen-pinyin").textContent = data.listening.pinyin;
+            document.getElementById("listen-dialogue").innerHTML = data.listening.dialogue;
+
+            const quizContainer = document.getElementById("quiz-container");
+            quizContainer.innerHTML = data.quiz.map((q, qIdx) => `
+                <div class="bg-slate-50 p-4 rounded-xl border space-y-2">
+                    <p class="font-semibold text-slate-800">Câu ${qIdx + 1}: ${q.q}</p>
+                    <div class="space-y-1">
+                        ${q.options.map((opt, oIdx) => `
+                            <label class="flex items-center gap-2 cursor-pointer text-slate-700">
+                                <input type="radio" name="q${qIdx}" value="${oIdx}" class="text-indigo-600 focus:ring-indigo-500">
+                                <span>${opt}</span>
+                            </label>
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('');
+            document.getElementById("quiz-result").textContent = "";
+
+            document.getElementById("translation-prompt").textContent = data.translation.prompt;
+            document.getElementById("user-translation-input").value = "";
+            document.getElementById("ai-feedback-box").classList.add("hidden");
+        }
+
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(el => {
+                el.classList.remove('bg-indigo-50', 'text-indigo-600');
+                el.classList.add('text-slate-600', 'hover:bg-slate-50');
+            });
+            document.getElementById(`tab-${tabName}`).classList.remove('hidden');
+            event.currentTarget.classList.add('bg-indigo-50', 'text-indigo-600');
+            event.currentTarget.classList.remove('text-slate-600', 'hover:bg-slate-50');
+        }
+
+        function updateFlashcard() {
+            const cards = hskDatabase[currentLevel][currentLesson].flashcards;
+            const fc = cards[currentCardIndex];
+            document.getElementById("fc-word").textContent = fc.word;
+            document.getElementById("fc-pinyin").textContent = fc.pinyin;
+            document.getElementById("fc-meaning").textContent = fc.meaning;
+            document.getElementById("fc-type").textContent = fc.type;
+            document.getElementById("fc-example").textContent = "Ví dụ: " + fc.example;
+            document.getElementById("card-inner").classList.remove("rotate-y-180");
+        }
+
+        function toggleCard(el) {
+            el.querySelector('#card-inner').classList.toggle('rotate-y-180');
+        }
+
+        function nextCard() {
+            const cards = hskDatabase[currentLevel][currentLesson].flashcards;
+            currentCardIndex = (currentCardIndex + 1) % cards.length;
+            updateFlashcard();
+        }
+
+        function prevCard() {
+            const cards = hskDatabase[currentLevel][currentLesson].flashcards;
+            currentCardIndex = (currentCardIndex - 1 + cards.length) % cards.length;
+            updateFlashcard();
+        }
+
+        function initHanziWriter(char) {
+            const container = document.getElementById('character-target-div');
+            container.innerHTML = "";
+            writer = HanziWriter.create('character-target-div', char, {
+                width: 180,
+                height: 180,
+                padding: 5,
+                showOutline: true,
+                strokeAnimationSpeed: 1,
+                delayBetweenStrokes: 1000,
+                strokeColor: '#4f46e5',
+                radicalColor: '#10b981'
             });
         }
 
-        function filterLevel(level) {
-            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-            renderLessons(level);
+        function updateHanzi(val) {
+            if (val.trim().length > 0) {
+                let char = val.trim().charAt(0);
+                initHanziWriter(char);
+            }
         }
 
-        function openModal(id) {
-            const lesson = lessonsData.find(l => l.id === id);
-            if (!lesson) return;
-
-            document.getElementById('modalTag').innerText = lesson.level;
-            document.getElementById('modalTitle').innerText = `${lesson.titleNum} - ${lesson.title} (${lesson.sub})`;
+        function playAudioSimulation() {
+            const icon = document.getElementById("audio-icon");
+            icon.classList.remove("fa-volume-high");
+            icon.classList.add("fa-wave-square", "animate-pulse");
             
-            let vocabHtml = lesson.vocab.map(v => `
-                <div class="vocab-item">
-                    <div class="vocab-hanzi">${v.hanzi}</div>
-                    <div class="vocab-pinyin">${v.pinyin}</div>
-                    <div class="vocab-meaning">${v.meaning}</div>
-                </div>
-            `).join('');
+            const textToSpeech = document.getElementById("listen-pinyin").textContent;
+            if ('speechSynthesis' in window) {
+                let utterance = new SpeechSynthesisUtterance(textToSpeech);
+                utterance.lang = 'zh-CN';
+                utterance.rate = 0.8;
+                window.speechSynthesis.speak(utterance);
+            }
 
-            let translateHtml = lesson.translate.map((t, idx) => `
-                <div class="translate-item">
-                    <div class="translate-prompt">${t.prompt}</div>
-                    <button class="btn-toggle" onclick="toggleAnswer(this)">Xem đáp án</button>
-                    <div class="translate-answer"><strong>Đáp án:</strong> ${t.answer}</div>
-                </div>
-            `).join('');
-
-            document.getElementById('modalBody').innerHTML = `
-                <div class="section-title">📚 Danh sách từ vựng</div>
-                <div class="vocab-grid">${vocabHtml}</div>
-                
-                <div class="section-title">💡 Ngữ pháp HSK 3.0</div>
-                <div class="grammar-box">${lesson.grammar}</div>
-
-                <div class="section-title">📝 Bài tập dịch câu</div>
-                <div>${translateHtml}</div>
-            `;
-
-            document.getElementById('lessonModal').classList.add('active');
+            setTimeout(() => {
+                icon.classList.remove("fa-wave-square", "animate-pulse");
+                icon.classList.add("fa-volume-high");
+            }, 2000);
         }
 
-        function closeModal() {
-            document.getElementById('lessonModal').classList.remove('active');
+        function submitQuiz() {
+            const data = hskDatabase[currentLevel][currentLesson].quiz;
+            let score = 0;
+            data.forEach((q, idx) => {
+                const selected = document.querySelector(`input[name="q${idx}"]:checked`);
+                if (selected && parseInt(selected.value) === q.correct) {
+                    score++;
+                }
+            });
+            const resultBox = document.getElementById("quiz-result");
+            resultBox.textContent = `Kết quả của bạn: ${score} / ${data.length} câu đúng!`;
+            resultBox.className = score === data.length ? "font-semibold text-lg text-emerald-600" : "font-semibold text-lg text-amber-600";
         }
 
-        function toggleAnswer(btn) {
-            const answerDiv = btn.nextElementSibling;
-            if (answerDiv.classList.contains('show')) {
-                answerDiv.classList.remove('show');
-                btn.innerText = 'Xem đáp án';
+        function aiEvaluateTranslation() {
+            const userText = document.getElementById("user-translation-input").value.trim();
+            const modelAnswer = hskDatabase[currentLevel][currentLesson].translation.modelAnswer;
+            const feedbackBox = document.getElementById("ai-feedback-box");
+            const feedbackText = document.getElementById("ai-feedback-text");
+
+            feedbackBox.classList.remove("hidden");
+            if (!userText) {
+                feedbackText.innerHTML = "<b>Chưa nhập câu trả lời!</b> Vui lòng nhập câu dịch của bạn để AI tiến hành phân tích.";
+                return;
+            }
+
+            if (userText === modelAnswer || userText.replace(/[，。]/g, '') === modelAnswer.replace(/[，。]/g, '')) {
+                feedbackText.innerHTML = `✅ <b>Chính xác tuyệt vời!</b> Câu dịch của bạn hoàn toàn khớp với chuẩn HSK 3.0.<br>💡 <b>Gợi ý diễn đạt thêm:</b> Câu này đã rất tự nhiên, có thể sử dụng mượt mà trong văn nói hàng ngày.`;
             } else {
-                answerDiv.classList.add('show');
-                btn.innerText = 'Ẩn đáp án';
+                feedbackText.innerHTML = `⚠️ <b>Có một vài lỗi nhỏ:</b> Bạn dịch chưa hoàn toàn chính xác nghĩa hoặc cấu trúc.<br>🎯 <b>Đáp án chuẩn xác gợi ý:</b> <code class="bg-white px-2 py-0.5 rounded border text-indigo-600 font-bold">${modelAnswer}</code><br>💡 <b>Gợi ý cải thiện:</b> Hãy chú ý vị trí các từ chỉ định và đại từ nhân xưng trong câu để văn phong trôi chảy hơn.`;
             }
         }
-
-        window.onclick = function(event) {
-            const modal = document.getElementById('lessonModal');
-            if (event.target === modal) {
-                closeModal();
-            }
-        }
-
-        // Khởi chạy khi load trang
-        renderLessons('all');
     </script>
 </body>
 </html>
