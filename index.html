@@ -300,6 +300,38 @@ header.top .subtitle{ color:var(--muted); font-size:13px; margin-top:2px;}
 .fb-ref-text.zh{ font-family:var(--font-han); }
 .fb-sim-note{ font-size:11.5px; color:var(--muted); margin-top:10px; font-style:italic; }
 
+/* ---- Pronunciation practice ---- */
+.pr-unsupported{
+  background:rgba(194,59,59,.15); border:1px solid var(--bad); border-radius:12px;
+  padding:14px 16px; font-size:13px; line-height:1.5; margin-bottom:16px;
+}
+.pr-card{
+  background:var(--paper); color:var(--paper-ink); border-radius:16px; padding:30px;
+  text-align:center; box-shadow:0 8px 24px rgba(0,0,0,.3); margin-bottom:16px;
+}
+.pr-hanzi{ font-family:var(--font-han); font-size:48px; margin-bottom:6px;}
+.pr-pinyin{ font-size:18px; color:var(--seal-dark); font-weight:600; margin-bottom:8px;}
+.pr-meaning{ font-size:15px; }
+.pr-mic-wrap{ display:flex; flex-direction:column; align-items:center; gap:8px; margin:22px 0; }
+.pr-mic-btn{
+  width:78px; height:78px; border-radius:50%; border:none; background:var(--seal); color:#fff;
+  font-size:32px; cursor:pointer; box-shadow:0 8px 20px rgba(194,59,59,.4);
+  transition:transform .15s;
+}
+.pr-mic-btn:hover{ transform:scale(1.05); }
+.pr-mic-btn.listening{ background:var(--bad); animation: micPulse 1.1s infinite; }
+@keyframes micPulse{
+  0%{ box-shadow:0 0 0 0 rgba(194,59,59,.6); }
+  70%{ box-shadow:0 0 0 22px rgba(194,59,59,0); }
+  100%{ box-shadow:0 0 0 0 rgba(194,59,59,0); }
+}
+.pr-mic-hint{ font-size:12.5px; color:var(--muted); }
+.pr-result{ min-height:10px; }
+.pr-result:empty{ display:none; }
+.pr-result .fb-box{ border-radius:12px; padding:16px 18px; margin-bottom:16px; border:1px solid #47536a; text-align:center;}
+.pr-result .pr-recognized{ font-family:var(--font-han); font-size:22px; margin:8px 0 2px; }
+.pr-result .pr-sub{ font-size:12px; color:var(--muted); }
+
 footer.app-footer{ text-align:center; color:var(--muted); font-size:12px; margin-top:40px;}
 .voice-status{ font-size:11px; color:var(--muted); text-align:center; margin-top:8px;}
 
@@ -368,6 +400,7 @@ footer.app-footer{ text-align:center; color:var(--muted); font-size:12px; margin
     <button class="tab-btn active" data-panel="panel-flashcard">Thẻ ghi nhớ</button>
     <button class="tab-btn" data-panel="panel-quiz">Trắc nghiệm</button>
     <button class="tab-btn" data-panel="panel-translate">Luyện dịch</button>
+    <button class="tab-btn" data-panel="panel-pronounce">Luyện phát âm</button>
   </div>
 
   <!-- FLASHCARD PANEL -->
@@ -506,6 +539,41 @@ footer.app-footer{ text-align:center; color:var(--muted); font-size:12px; margin
     </div>
   </section>
 
+  <!-- PRONUNCIATION PRACTICE PANEL -->
+  <section id="panel-pronounce" class="panel">
+    <p class="tr-note">Luyện nói từ ngẫu nhiên trong các cấp độ HSK đang chọn ở bộ lọc phía trên. Cần trình duyệt hỗ trợ nhận diện giọng nói (khuyến nghị Chrome trên máy tính hoặc Android) và cho phép quyền micro.</p>
+
+    <div id="prUnsupported" class="pr-unsupported" style="display:none;">
+      ⚠️ Trình duyệt hoặc thiết bị này chưa hỗ trợ nhận diện giọng nói (thường gặp trên iPhone/Safari). Vui lòng dùng Chrome trên máy tính hoặc điện thoại Android để dùng tính năng luyện phát âm. Các tính năng khác của web vẫn dùng bình thường.
+    </div>
+
+    <div id="prContent">
+      <div class="pr-card">
+        <div class="pr-hanzi" id="prHanzi">汉语</div>
+        <div class="pr-pinyin" id="prPinyin">hànyǔ</div>
+        <div class="pr-meaning" id="prMeaning">tiếng Hán</div>
+      </div>
+
+      <div class="card-toolbar">
+        <button class="icon-btn" id="prListenBtn">🔊 Nghe mẫu</button>
+        <button class="icon-btn" id="prNewBtn">🔀 Từ khác</button>
+      </div>
+
+      <div class="pr-mic-wrap">
+        <button class="pr-mic-btn" id="prMicBtn">🎤</button>
+        <div class="pr-mic-hint" id="prMicHint">Bấm micro rồi đọc to từ trên</div>
+      </div>
+
+      <div id="prResult" class="pr-result"></div>
+
+      <div class="stats-bar">
+        <span>Số lần luyện: <b id="prAttempted">0</b></span>
+        <span>Số lần phát âm chuẩn: <b id="prCorrect">0</b></span>
+        <button class="icon-btn ghost" id="prResetStatsBtn" style="margin-left:12px;">Đặt lại điểm</button>
+      </div>
+    </div>
+  </section>
+
   <footer class="app-footer">Học từ vựng HSK 1–9 · Dữ liệu tổng hợp từ tài liệu tải lên · Chạy hoàn toàn trong trình duyệt, không cần máy chủ</footer>
 </div>
 
@@ -581,6 +649,7 @@ function initApp(rawData){
   setupSearch();
   setupStrokeModal();
   setupTranslatePractice();
+  setupPronouncePractice();
   loadVoices();
 }
 
@@ -624,6 +693,7 @@ function applyFilter(){
   renderFlashcard();
   updateStats();
   trCurrent = null; // force a fresh translate sentence next time that tab is used
+  prCurrent = null; // force a fresh pronunciation word next time that tab is used
 }
 
 /* ================= Tabs ================= */
@@ -753,30 +823,71 @@ function setupSearch(){
   });
 }
 
-/* ================= Audio (Web Speech API) ================= */
+/* ================= Audio =================
+   Ưu tiên phát âm bằng giọng đọc online chuẩn phổ thông (Trung Quốc đại lục)
+   qua các dịch vụ từ điển Trung Quốc — hoạt động ổn định trên điện thoại
+   (không phụ thuộc vào giọng đọc cài sẵn trên từng máy, vốn rất chập chờn
+   trên trình duyệt di động). Nếu mất mạng, tự động chuyển sang giọng đọc
+   có sẵn của trình duyệt (nếu máy có cài giọng tiếng Trung). */
 let zhVoice = null;
 function loadVoices(){
   const pick = ()=>{
+    if(!('speechSynthesis' in window)) return;
     const voices = speechSynthesis.getVoices();
-    zhVoice = voices.find(v=>v.lang==='zh-CN') || voices.find(v=>v.lang && v.lang.startsWith('zh')) || null;
-    document.getElementById('voiceStatus').textContent = zhVoice
-      ? ('Giọng đọc: ' + zhVoice.name)
-      : 'Không tìm thấy giọng tiếng Trung trên trình duyệt này — âm thanh có thể không phát được.';
+    // chỉ chấp nhận giọng phổ thông Trung Quốc đại lục (zh-CN) làm phương án dự phòng,
+    // không dùng zh-TW / zh-HK để tránh lệch giọng.
+    zhVoice = voices.find(v=>v.lang==='zh-CN') || null;
   };
   pick();
-  if(speechSynthesis.onvoiceschanged !== undefined) speechSynthesis.onvoiceschanged = pick;
+  if('speechSynthesis' in window && speechSynthesis.onvoiceschanged !== undefined){
+    speechSynthesis.onvoiceschanged = pick;
+  }
+  const statusEl = document.getElementById('voiceStatus');
+  if(statusEl){
+    statusEl.textContent = 'Phát âm bằng giọng phổ thông Trung Quốc đại lục (cần có mạng). Mất mạng sẽ tự chuyển sang giọng đọc có sẵn trên thiết bị nếu có.';
+  }
 }
-function speak(text){
+
+function speakBrowserFallback(text){
   if(!('speechSynthesis' in window)){
-    alert('Trình duyệt này không hỗ trợ phát âm.');
+    alert('Không phát được âm thanh: thiết bị/trình duyệt này không hỗ trợ phát âm và hiện không có mạng để tải giọng đọc online.');
+    return;
+  }
+  if(!zhVoice){
+    alert('Không có mạng để tải giọng đọc chuẩn, và máy này cũng không có sẵn giọng tiếng Trung (zh-CN) để dùng thay thế.');
     return;
   }
   speechSynthesis.cancel();
   const u = new SpeechSynthesisUtterance(text);
   u.lang = 'zh-CN';
-  if(zhVoice) u.voice = zhVoice;
+  u.voice = zhVoice;
   u.rate = 0.85;
   speechSynthesis.speak(u);
+}
+
+// Nguồn giọng đọc online chuẩn đại lục, thử lần lượt cho tới khi phát được.
+function buildOnlineAudioSources(text){
+  const q = encodeURIComponent(text);
+  return [
+    `https://dict.youdao.com/dictvoice?type=2&audio=${q}`,
+    `https://fanyi.baidu.com/gettts?lan=zh&text=${q}&spd=4&source=web`,
+  ];
+}
+
+function speak(text){
+  if(!text) return;
+  const sources = buildOnlineAudioSources(text);
+  let i = 0;
+  const audio = new Audio();
+  let settled = false;
+  const tryNext = ()=>{
+    if(settled) return;
+    if(i >= sources.length){ settled = true; speakBrowserFallback(text); return; }
+    audio.src = sources[i++];
+    audio.play().catch(tryNext);
+  };
+  audio.addEventListener('error', tryNext);
+  tryNext();
 }
 
 /* ================= Stroke order modal (HanziWriter) ================= */
@@ -1058,6 +1169,165 @@ function stripDiacritics(str){
 }
 function normText(str){
   return stripDiacritics(str||'').toLowerCase().replace(/[.,;!?()"'…\-]/g,' ').replace(/\s+/g,' ').trim();
+}
+
+/* ================= Pronunciation Practice (SpeechRecognition) ================= */
+let prCurrent = null;
+let prStats = {attempted:0, correct:0};
+let prRecognizer = null;
+let prListening = false;
+
+function setupPronouncePractice(){
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const unsupportedBox = document.getElementById('prUnsupported');
+  const contentBox = document.getElementById('prContent');
+
+  if(!SR){
+    unsupportedBox.style.display = 'block';
+    contentBox.style.display = 'none';
+    return; // no recognizer available on this browser/device
+  }
+
+  prRecognizer = new SR();
+  prRecognizer.lang = 'zh-CN';
+  prRecognizer.continuous = false;
+  prRecognizer.interimResults = false;
+  prRecognizer.maxAlternatives = 3;
+
+  prRecognizer.onresult = (e)=>{
+    const alts = [];
+    for(let i=0;i<e.results[0].length;i++) alts.push(e.results[0][i].transcript);
+    handlePronounceResult(alts);
+  };
+  prRecognizer.onerror = (e)=>{
+    setListening(false);
+    let msg = 'Có lỗi khi nhận diện giọng nói, hãy thử lại.';
+    if(e.error === 'not-allowed' || e.error === 'permission-denied'){
+      msg = 'Trình duyệt chưa được cấp quyền micro. Hãy cho phép quyền micro rồi thử lại.';
+    } else if(e.error === 'no-speech'){
+      msg = 'Không nghe thấy giọng nói. Hãy bấm micro và đọc to hơn.';
+    } else if(e.error === 'audio-capture'){
+      msg = 'Không tìm thấy micro trên thiết bị này.';
+    } else if(e.error === 'network'){
+      msg = 'Cần có kết nối mạng để nhận diện giọng nói.';
+    }
+    showPronounceMessage(msg, 'fb-wrong');
+  };
+  prRecognizer.onend = ()=>{ setListening(false); };
+
+  document.getElementById('prMicBtn').addEventListener('click', togglePronounceListening);
+  document.getElementById('prListenBtn').addEventListener('click', ()=>{
+    if(prCurrent) speak(prCurrent.h);
+  });
+  document.getElementById('prNewBtn').addEventListener('click', pickPronounceWord);
+  document.getElementById('prResetStatsBtn').addEventListener('click', ()=>{
+    prStats = {attempted:0, correct:0};
+    renderPrStats();
+  });
+
+  document.querySelector('.tab-btn[data-panel="panel-pronounce"]').addEventListener('click', ()=>{
+    if(!prCurrent) pickPronounceWord();
+  });
+}
+
+function pickPronounceWord(){
+  document.getElementById('prResult').innerHTML = '';
+  if(pool.length===0){
+    document.getElementById('prHanzi').textContent = '(chưa có từ)';
+    document.getElementById('prPinyin').textContent = '';
+    document.getElementById('prMeaning').textContent = 'Hãy chọn ít nhất một cấp độ HSK ở bộ lọc phía trên.';
+    prCurrent = null;
+    return;
+  }
+  prCurrent = pool[Math.floor(Math.random()*pool.length)];
+  document.getElementById('prHanzi').textContent = prCurrent.h;
+  document.getElementById('prPinyin').textContent = prCurrent.p;
+  document.getElementById('prMeaning').textContent = prCurrent.m;
+}
+
+function setListening(on){
+  prListening = on;
+  const btn = document.getElementById('prMicBtn');
+  const hint = document.getElementById('prMicHint');
+  btn.classList.toggle('listening', on);
+  hint.textContent = on ? 'Đang nghe... hãy đọc to từ trên' : 'Bấm micro rồi đọc to từ trên';
+}
+
+function togglePronounceListening(){
+  if(!prCurrent){ pickPronounceWord(); if(!prCurrent) return; }
+  if(prListening){
+    prRecognizer.stop();
+    return;
+  }
+  document.getElementById('prResult').innerHTML = '';
+  try{
+    prRecognizer.start();
+    setListening(true);
+  }catch(err){
+    showPronounceMessage('Không thể bắt đầu ghi âm — hãy thử bấm lại sau vài giây.', 'fb-wrong');
+  }
+}
+
+function cleanForCompare(s){
+  return (s||'').replace(/[，。！？、,.!?\s]/g,'');
+}
+
+// simple normalized Levenshtein similarity (0..1) on characters
+function charSimilarity(a, b){
+  if(a===b) return 1;
+  const la=a.length, lb=b.length;
+  if(la===0 || lb===0) return 0;
+  const dp = Array.from({length:la+1}, ()=>new Array(lb+1).fill(0));
+  for(let i=0;i<=la;i++) dp[i][0]=i;
+  for(let j=0;j<=lb;j++) dp[0][j]=j;
+  for(let i=1;i<=la;i++){
+    for(let j=1;j<=lb;j++){
+      dp[i][j] = a[i-1]===b[j-1] ? dp[i-1][j-1] : 1 + Math.min(dp[i-1][j], dp[i][j-1], dp[i-1][j-1]);
+    }
+  }
+  const dist = dp[la][lb];
+  return 1 - dist / Math.max(la, lb);
+}
+
+function handlePronounceResult(alternatives){
+  if(!prCurrent) return;
+  const target = cleanForCompare(prCurrent.h);
+  const cleanedAlts = alternatives.map(cleanForCompare);
+
+  let best = {text: cleanedAlts[0]||'', sim: 0};
+  cleanedAlts.forEach(alt=>{
+    const sim = charSimilarity(alt, target);
+    if(sim > best.sim) best = {text: alt, sim};
+  });
+  const exact = cleanedAlts.includes(target);
+  const sim = exact ? 1 : best.sim;
+
+  prStats.attempted++;
+  let verdict, cls;
+  if(exact || sim >= 0.8){
+    verdict = '✓ Phát âm chuẩn!'; cls='fb-correct'; prStats.correct++;
+  } else if(sim >= 0.4){
+    verdict = '≈ Khá gần, thử phát âm rõ hơn'; cls='fb-partial';
+  } else {
+    verdict = '✗ Chưa đúng, hãy nghe mẫu rồi thử lại'; cls='fb-wrong';
+  }
+  renderPrStats();
+
+  document.getElementById('prResult').innerHTML = `<div class="fb-box ${cls}">
+      <div class="fb-verdict">${verdict}</div>
+      <div class="pr-recognized">${best.text || '(không nghe rõ)'}</div>
+      <div class="pr-sub">Máy nghe được câu trên · Từ cần luyện: <b style="font-family:var(--font-han)">${prCurrent.h}</b> (${prCurrent.p})</div>
+      <div class="fb-sim-note">Đây là ước lượng dựa trên độ chính xác của việc nhận diện giọng nói, không phải phân tích thanh điệu chuyên sâu — chỉ mang tính tham khảo.</div>
+    </div>`;
+}
+
+function showPronounceMessage(msg, cls){
+  document.getElementById('prResult').innerHTML = `<div class="fb-box ${cls}"><div class="fb-verdict">${msg}</div></div>`;
+}
+
+function renderPrStats(){
+  document.getElementById('prAttempted').textContent = prStats.attempted;
+  document.getElementById('prCorrect').textContent = prStats.correct;
 }
 
 document.addEventListener('DOMContentLoaded', ()=>{
